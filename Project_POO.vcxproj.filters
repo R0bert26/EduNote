@@ -13,5 +13,64 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Model">
+      <UniqueIdentifier>{2e1035b6-1273-48f9-996f-f456bbfee075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View">
+      <UniqueIdentifier>{f75a1279-bfb3-41e8-9db9-6334dc3b41c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Controller">
+      <UniqueIdentifier>{5f1bd2a6-7f95-4a19-8755-2b257b211a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\App">
+      <UniqueIdentifier>{c015d5be-475e-4fa2-8fd2-93418e3dddd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Template">
+      <UniqueIdentifier>{16aafdec-d5ca-4a2a-b9e4-a131a7f69b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{149370c0-4af9-42d4-b264-5ade5446ba01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{ab140e8f-7b88-43cf-8fb4-09ee07cfd777}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controller">
+      <UniqueIdentifier>{6b0bcda5-5040-416c-8619-4b0f164c7a25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App">
+      <UniqueIdentifier>{fce47052-986c-41ee-a4c8-c689fc4ed1b4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="README.md" />
+    <None Include="login.html">
+      <Filter>Resource Files\Template</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="router.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="login_controller.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="login_view.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="router.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="login_controller.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="login_view.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
