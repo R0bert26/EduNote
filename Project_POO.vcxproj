@@ -129,19 +129,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="login.css" />
     <None Include="login.html" />
-    <None Include="README.md" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="data_base.cpp" />
     <ClCompile Include="login_controller.cpp" />
-    <ClCompile Include="login_view.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="router.cpp" />
+    <ClCompile Include="view.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="data_base.h" />
     <ClInclude Include="login_controller.h" />
-    <ClInclude Include="login_view.h" />
     <ClInclude Include="router.h" />
+    <ClInclude Include="view.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="config.template.txt" />
+    <Text Include="config.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

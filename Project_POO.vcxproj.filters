@@ -25,9 +25,6 @@
     <Filter Include="Header Files\App">
       <UniqueIdentifier>{c015d5be-475e-4fa2-8fd2-93418e3dddd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Template">
-      <UniqueIdentifier>{16aafdec-d5ca-4a2a-b9e4-a131a7f69b29}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model">
       <UniqueIdentifier>{149370c0-4af9-42d4-b264-5ade5446ba01}</UniqueIdentifier>
     </Filter>
@@ -40,12 +37,21 @@
     <Filter Include="Source Files\App">
       <UniqueIdentifier>{fce47052-986c-41ee-a4c8-c689fc4ed1b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Templates">
+      <UniqueIdentifier>{16aafdec-d5ca-4a2a-b9e4-a131a7f69b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Static">
+      <UniqueIdentifier>{8387c18d-7d5e-4aaf-98e1-dfb4cf25e62f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="README.md" />
+    <None Include="readme.md" />
     <None Include="login.html">
-      <Filter>Resource Files\Template</Filter>
+      <Filter>Resource Files\Templates</Filter>
+    </None>
+    <None Include="login.css">
+      <Filter>Resource Files\Static</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -58,7 +64,10 @@
     <ClCompile Include="login_controller.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="login_view.cpp">
+    <ClCompile Include="data_base.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="view.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
   </ItemGroup>
@@ -69,8 +78,15 @@
     <ClInclude Include="login_controller.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="login_view.h">
+    <ClInclude Include="data_base.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="view.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="config.txt" />
+    <Text Include="config.template.txt" />
   </ItemGroup>
 </Project>
