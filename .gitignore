@@ -7,6 +7,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Ignore configuration files
+config.txt
+
+# Ignore project files
+~AutoRecover.Project_POO.vcxproj*
+
 # User-specific files
 *.rsuser
 *.suo
