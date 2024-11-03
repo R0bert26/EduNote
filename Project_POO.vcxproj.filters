@@ -86,7 +86,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="config.txt" />
     <Text Include="config.template.txt" />
+    <Text Include="config.txt" />
   </ItemGroup>
 </Project>
