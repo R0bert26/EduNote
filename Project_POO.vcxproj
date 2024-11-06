@@ -129,21 +129,31 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="admin.css" />
+    <None Include="admin.html" />
     <None Include="login.css" />
     <None Include="login.html" />
+    <None Include="professor.css" />
+    <None Include="professor.html" />
     <None Include="readme.md" />
+    <None Include="student.css" />
+    <None Include="student.html" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="user_service.cpp" />
     <ClCompile Include="data_base.cpp" />
     <ClCompile Include="login_controller.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="router.cpp" />
+    <ClCompile Include="user.cpp" />
     <ClCompile Include="view.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="user_service.h" />
     <ClInclude Include="data_base.h" />
     <ClInclude Include="login_controller.h" />
     <ClInclude Include="router.h" />
+    <ClInclude Include="user.h" />
     <ClInclude Include="view.h" />
   </ItemGroup>
   <ItemGroup>
