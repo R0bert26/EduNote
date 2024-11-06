@@ -43,6 +43,12 @@
     <Filter Include="Resource Files\Static">
       <UniqueIdentifier>{8387c18d-7d5e-4aaf-98e1-dfb4cf25e62f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Service">
+      <UniqueIdentifier>{dc637600-cbcf-460c-9ea7-71ae4f978f9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Service">
+      <UniqueIdentifier>{d0dd48d9-85bb-410d-b655-4748f79eec31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -52,6 +58,24 @@
     </None>
     <None Include="login.css">
       <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="admin.html">
+      <Filter>Resource Files\Templates</Filter>
+    </None>
+    <None Include="admin.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="student.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="professor.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="student.html">
+      <Filter>Resource Files\Templates</Filter>
+    </None>
+    <None Include="professor.html">
+      <Filter>Resource Files\Templates</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +94,12 @@
     <ClCompile Include="view.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
+    <ClCompile Include="user.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="user_service.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="router.h">
@@ -83,6 +113,12 @@
     </ClInclude>
     <ClInclude Include="view.h">
       <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="user.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="user_service.h">
+      <Filter>Header Files\Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

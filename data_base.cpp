@@ -37,7 +37,7 @@ std::unordered_map<std::string, std::string> DataBase::getParams()
 	return params;
 }
 
-soci::session& DataBase::getInstance()
+soci::session& DataBase::session()
 {
 	if (!instance)
 	{
@@ -60,6 +60,8 @@ void DataBase::connect()
 			params.find("port") == params.end())
 		{
 			std::cerr << "Error configuring database" << std::endl;
+
+			return;
 		}
 
 		instance = std::unique_ptr<DataBase>(new DataBase(params["dbName"], params["user"], params["password"], params["host"], params["port"]));

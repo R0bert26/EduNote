@@ -9,7 +9,7 @@
 class DataBase
 {
 public:
-	static soci::session& getInstance();
+	static soci::session& session();
 
 	static void connect();
 
