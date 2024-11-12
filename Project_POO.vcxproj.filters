@@ -77,6 +77,12 @@
     <None Include="professor.html">
       <Filter>Resource Files\Templates</Filter>
     </None>
+    <None Include="error.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="error.html">
+      <Filter>Resource Files\Templates</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -100,6 +106,9 @@
     <ClCompile Include="user_service.cpp">
       <Filter>Source Files\Service</Filter>
     </ClCompile>
+    <ClCompile Include="error.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="router.h">
@@ -120,9 +129,12 @@
     <ClInclude Include="user_service.h">
       <Filter>Header Files\Service</Filter>
     </ClInclude>
+    <ClInclude Include="error.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="config.template.txt" />
-    <Text Include="config.txt" />
+    <Text Include=".env.example" />
+    <Text Include=".env" />
   </ItemGroup>
 </Project>

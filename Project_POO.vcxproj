@@ -71,6 +71,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -105,6 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +135,8 @@
     <None Include=".gitignore" />
     <None Include="admin.css" />
     <None Include="admin.html" />
+    <None Include="error.css" />
+    <None Include="error.html" />
     <None Include="login.css" />
     <None Include="login.html" />
     <None Include="professor.css" />
@@ -140,6 +146,7 @@
     <None Include="student.html" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="error.cpp" />
     <ClCompile Include="user_service.cpp" />
     <ClCompile Include="data_base.cpp" />
     <ClCompile Include="login_controller.cpp" />
@@ -149,6 +156,7 @@
     <ClCompile Include="view.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="error.h" />
     <ClInclude Include="user_service.h" />
     <ClInclude Include="data_base.h" />
     <ClInclude Include="login_controller.h" />
@@ -157,8 +165,8 @@
     <ClInclude Include="view.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="config.template.txt" />
-    <Text Include="config.txt" />
+    <Text Include=".env.example" />
+    <Text Include=".env" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

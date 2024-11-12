@@ -6,7 +6,7 @@
 class View
 {
 public:
-	static std::string load_file(const std::string& fileName);
+	static std::string load_css_file(const std::string& fileName);
 };
 
 #endif

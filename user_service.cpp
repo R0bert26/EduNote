@@ -23,7 +23,7 @@ User UserService::get_user(const std::string& email, const std::string& password
 
 	if (id == 0 || firstName == "" || lastName == "" || role == "")
 	{
-		std::cerr << "Error Getting User" << std::endl;
+		std::cerr << "\nError Getting User\n" << std::endl;
 
 		return User(0, "", "", "", "");
 	}

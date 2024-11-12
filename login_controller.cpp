@@ -1,5 +1,6 @@
 #include "login_controller.h"
 #include "user_service.h"
+#include "error.h"
 
 void LoginController::login(const crow::request& req, crow::response& res)
 {
@@ -14,29 +15,29 @@ void LoginController::login(const crow::request& req, crow::response& res)
 
 		if (user.get_id() == 0)
 		{
-			res.code = 500;
-			res.body = "Invalid User";
+			Error::generate_error_page(res, 500, "Invalid User");
 		}
-
-		if (user.get_role() == "admin")
+		else
 		{
-			res.code = 302;
-			res.set_header("Location", "/admin");
-		}
-		else if (user.get_role() == "student")
-		{
-			res.code = 302;
-			res.set_header("Location", "/student");
-		}
-		else if (user.get_role() == "professor")
-		{
-			res.code = 302;
-			res.set_header("Location", "/professor");
+			if (user.get_role() == "admin")
+			{
+				res.code = 302;
+				res.set_header("Location", "/admin");
+			}
+			else if (user.get_role() == "student")
+			{
+				res.code = 302;
+				res.set_header("Location", "/student");
+			}
+			else if (user.get_role() == "professor")
+			{
+				res.code = 302;
+				res.set_header("Location", "/professor");
+			}
 		}
 	}
 	else
 	{
-		res.code = 401;
-		res.body = "Invalid Email or Password";
+		Error::generate_error_page(res, 401, "Invalid Email or Password");
 	}
 }

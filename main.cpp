@@ -3,23 +3,31 @@
 #include "data_base.h"
 #include "router.h"
 
-void main()
+int main()
 {
-	crow::SimpleApp app;
-	Router router;
-
 	try
 	{
 		DataBase::connect();
 
-		std::cout << "Database connected" << std::endl;
+		std::cout << "Database Connected" << std::endl;
 	}
 	catch (const std::exception& e)
 	{
-		std::cerr << "Database connection error: " << e.what() << std::endl;
+		std::cerr << "Database Connection Error: " << e.what() << std::endl;
+
+		return 1;
 	}
+
+	crow::SimpleApp app;
+	Router router;
+
+	crow::mustache::set_global_base("./");
 
 	router.init_routes(app);
 
+	std::cout << "Server started on port 18080\n" << std::endl;
+
 	app.port(18080).multithreaded().run();
+
+	return 0;
 }
