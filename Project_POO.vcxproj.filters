@@ -83,6 +83,7 @@
     <None Include="error.html">
       <Filter>Resource Files\Templates</Filter>
     </None>
+    <None Include=".env" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -135,6 +136,5 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include=".env.example" />
-    <Text Include=".env" />
   </ItemGroup>
 </Project>

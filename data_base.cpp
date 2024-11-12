@@ -24,7 +24,7 @@ std::unordered_map<std::string, std::string> DataBase::getParams()
 
 	if (!file.is_open())
 	{
-		std::cerr << "Error opening config.txt" << std::endl;
+		std::cerr << "Error opening .env file" << std::endl;
 
 		exit(1);
 	}
