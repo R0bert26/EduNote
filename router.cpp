@@ -1,5 +1,6 @@
 #include "router.h"
 #include "login_controller.h"
+#include "error.h"
 #include "view.h"
 
 void Router::init_routes(crow::SimpleApp& app)
@@ -11,22 +12,17 @@ void Router::init_routes(crow::SimpleApp& app)
 			if (req.method == crow::HTTPMethod::GET)
 			{
 				res.code = 200;
-				res.body = View::load_file("login.html");
+				res.body = crow::mustache::load_text("login.html");
+				res.set_header("Content-Type", "text/html");
 
 				if (res.body.empty())
 				{
-					res.code = 404;
-					res.body = "Page Not Found";
+					Error::generate_error_page(res, 404, "Page Not Found");
 				}
 			}
 			else if (req.method == crow::HTTPMethod::POST)
 			{
 				loginController.login(req, res);
-			}
-			else
-			{
-				res.code = 405;
-				res.body = "Method Not Allowed";
 			}
 
 			res.end();
@@ -37,18 +33,13 @@ void Router::init_routes(crow::SimpleApp& app)
 			if (req.method == crow::HTTPMethod::GET)
 			{
 				res.code = 200;
-				res.body = View::load_file("admin.html");
+				res.body = crow::mustache::load_text("admin.html");
+				res.set_header("Content-Type", "text/html");
 
 				if (res.body.empty())
 				{
-					res.code = 404;
-					res.body = "Page Not Found";
+					Error::generate_error_page(res, 404, "Page Not Found");
 				}
-			}
-			else
-			{
-				res.code = 405;
-				res.body = "Method Not Allowed";
 			}
 
 			res.end();
@@ -59,18 +50,13 @@ void Router::init_routes(crow::SimpleApp& app)
 			if (req.method == crow::HTTPMethod::GET)
 			{
 				res.code = 200;
-				res.body = View::load_file("student.html");
+				res.body = crow::mustache::load_text("student.html");
+				res.set_header("Content-Type", "text/html");
 
 				if (res.body.empty())
 				{
-					res.code = 404;
-					res.body = "Page Not Found";
+					Error::generate_error_page(res, 404, "Page Not Found");
 				}
-			}
-			else
-			{
-				res.code = 405;
-				res.body = "Method Not Allowed";
 			}
 
 			res.end();
@@ -81,106 +67,30 @@ void Router::init_routes(crow::SimpleApp& app)
 			if (req.method == crow::HTTPMethod::GET)
 			{
 				res.code = 200;
-				res.body = View::load_file("professor.html");
+				res.body = crow::mustache::load_text("professor.html");
+				res.set_header("Content-Type", "text/html");
 
 				if (res.body.empty())
 				{
-					res.code = 404;
-					res.body = "Page Not Found";
+					Error::generate_error_page(res, 404, "Page Not Found");
 				}
-			}
-			else
-			{
-				res.code = 405;
-				res.body = "Method Not Allowed";
 			}
 
 			res.end();
 		});
 
-	CROW_ROUTE(app, "/admin.css").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res)
+	CROW_ROUTE(app, "/static/<string>").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res, const std::string& cssFile)
 		{
 			if (req.method == crow::HTTPMethod::GET)
 			{
 				res.code = 200;
-				res.body = View::load_file("admin.css");
+				res.body = View::load_css_file(cssFile);
+				res.set_header("Content-Type", "text/css");
 
 				if (res.body.empty())
 				{
-					res.code = 404;
-					res.body = "Page Not Found";
+					Error::generate_error_page(res, 404, "Page Not Found");
 				}
-			}
-			else
-			{
-				res.code = 405;
-				res.body = "Method Not Allowed";
-			}
-
-			res.end();
-		});
-
-	CROW_ROUTE(app, "/student.css").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res)
-		{
-			if (req.method == crow::HTTPMethod::GET)
-			{
-				res.code = 200;
-				res.body = View::load_file("student.css");
-
-				if (res.body.empty())
-				{
-					res.code = 404;
-					res.body = "Page Not Found";
-				}
-			}
-			else
-			{
-				res.code = 405;
-				res.body = "Method Not Allowed";
-			}
-
-			res.end();
-		});
-
-	CROW_ROUTE(app, "/login.css").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res)
-		{
-			if (req.method == crow::HTTPMethod::GET)
-			{
-				res.code = 200;
-				res.body = View::load_file("login.css");
-
-				if (res.body.empty())
-				{
-					res.code = 404;
-					res.body = "Page Not Found";
-				}
-			}
-			else
-			{
-				res.code = 405;
-				res.body = "Method Not Allowed";
-			}
-
-			res.end();
-		});
-
-	CROW_ROUTE(app, "/professor.css").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res)
-		{
-			if (req.method == crow::HTTPMethod::GET)
-			{
-				res.code = 200;
-				res.body = View::load_file("professor.css");
-
-				if (res.body.empty())
-				{
-					res.code = 404;
-					res.body = "Page Not Found";
-				}
-			}
-			else
-			{
-				res.code = 405;
-				res.body = "Method Not Allowed";
 			}
 
 			res.end();

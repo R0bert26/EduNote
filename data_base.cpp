@@ -1,6 +1,7 @@
 #include "data_base.h"
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 std::unique_ptr<DataBase> DataBase::instance = nullptr;
 
@@ -9,27 +10,31 @@ DataBase::DataBase(
 	const std::string& user,
 	const std::string& password,
 	const std::string& host,
-	const std::string& port) : sql(soci::postgresql,
-		"dbname=" + dbName + " user=" + user + " password=" + password + " host=" + host + " port=" + port) {}
+	const std::string& port) :
+	sql(soci::postgresql, "dbname=" + dbName + " user=" + user + " password=" + password + " host=" + host + " port=" + port) {}
 
 std::unordered_map<std::string, std::string> DataBase::getParams()
 {
 	std::unordered_map<std::string, std::string> params;
 	std::string key;
 	std::string value;
+	std::string line;
 
-	std::ifstream file("config.txt");
+	std::ifstream file(".env");
 
-	if (!file)
+	if (!file.is_open())
 	{
 		std::cerr << "Error opening config.txt" << std::endl;
 
 		exit(1);
 	}
 
-	while (file >> key >> value)
+	while (getline(file, line))
 	{
-		key.pop_back();
+		std::stringstream ss(line);
+
+		getline(ss, key, '=');
+		getline(ss, value, '=');
 
 		params[key] = value;
 	}
@@ -42,6 +47,8 @@ soci::session& DataBase::session()
 	if (!instance)
 	{
 		std::cerr << "Database not connected" << std::endl;
+
+		exit(1);
 	}
 
 	return instance->sql;
@@ -53,17 +60,17 @@ void DataBase::connect()
 	{
 		std::unordered_map<std::string, std::string> params = DataBase::getParams();
 
-		if (params.find("dbName") == params.end() ||
-			params.find("user") == params.end() ||
-			params.find("password") == params.end() ||
-			params.find("host") == params.end() ||
-			params.find("port") == params.end())
+		if (params.find("DB_NAME") == params.end() ||
+			params.find("DB_USER") == params.end() ||
+			params.find("DB_PASSWORD") == params.end() ||
+			params.find("DB_HOST") == params.end() ||
+			params.find("DB_PORT") == params.end())
 		{
 			std::cerr << "Error configuring database" << std::endl;
 
-			return;
+			exit(1);
 		}
 
-		instance = std::unique_ptr<DataBase>(new DataBase(params["dbName"], params["user"], params["password"], params["host"], params["port"]));
+		instance = std::unique_ptr<DataBase>(new DataBase(params["DB_NAME"], params["DB_USER"], params["DB_PASSWORD"], params["DB_HOST"], params["DB_PORT"]));
 	}
 }

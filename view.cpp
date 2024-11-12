@@ -3,11 +3,11 @@
 #include <fstream>
 #include <sstream>
 
-std::string View::load_file(const std::string& fileName)
+std::string View::load_css_file(const std::string& fileName)
 {
 	std::ifstream file(fileName);
 
-	if (!file)
+	if (!file.is_open())
 	{
 		std::cerr << "Error opening file: " << fileName << std::endl;
 
