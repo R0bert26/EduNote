@@ -6,7 +6,7 @@
 #include <string>
 #include <unordered_map>
 
-class DataBase
+class Database
 {
 public:
 	static soci::session& session();
@@ -14,9 +14,9 @@ public:
 	static void connect();
 
 private:
-	static std::unique_ptr<DataBase> instance;
+	static std::unique_ptr<Database> instance;
 
-	DataBase(
+	Database(
 		const std::string& dbName,
 		const std::string& user,
 		const std::string& password,

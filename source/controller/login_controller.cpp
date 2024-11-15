@@ -1,6 +1,6 @@
-#include "login_controller.h"
-#include "user_service.h"
-#include "error.h"
+#include "../../headers/controller/login_controller.h"
+#include "../../headers/service/user_service.h"
+#include "../../headers/app/error.h"
 
 void LoginController::login(const crow::request& req, crow::response& res)
 {

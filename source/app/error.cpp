@@ -1,5 +1,5 @@
-#include "error.h"
-#include "view.h"
+#include "../../headers/app/error.h"
+#include "../../headers/view/view.h"
 
 void Error::generate_error_page(crow::response& res, const int& errorCode, const std::string& errorMessage)
 {

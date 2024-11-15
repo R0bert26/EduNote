@@ -1,11 +1,11 @@
-#include "data_base.h"
+#include "../../headers/app/database.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
-std::unique_ptr<DataBase> DataBase::instance = nullptr;
+std::unique_ptr<Database> Database::instance = nullptr;
 
-DataBase::DataBase(
+Database::Database(
 	const std::string& dbName,
 	const std::string& user,
 	const std::string& password,
@@ -13,7 +13,7 @@ DataBase::DataBase(
 	const std::string& port) :
 	sql(soci::postgresql, "dbname=" + dbName + " user=" + user + " password=" + password + " host=" + host + " port=" + port) {}
 
-std::unordered_map<std::string, std::string> DataBase::getParams()
+std::unordered_map<std::string, std::string> Database::getParams()
 {
 	std::unordered_map<std::string, std::string> params;
 	std::string key;
@@ -42,7 +42,7 @@ std::unordered_map<std::string, std::string> DataBase::getParams()
 	return params;
 }
 
-soci::session& DataBase::session()
+soci::session& Database::session()
 {
 	if (!instance)
 	{
@@ -54,11 +54,11 @@ soci::session& DataBase::session()
 	return instance->sql;
 }
 
-void DataBase::connect()
+void Database::connect()
 {
 	if (!instance)
 	{
-		std::unordered_map<std::string, std::string> params = DataBase::getParams();
+		std::unordered_map<std::string, std::string> params = Database::getParams();
 
 		if (params.find("DB_NAME") == params.end() ||
 			params.find("DB_USER") == params.end() ||
@@ -71,6 +71,6 @@ void DataBase::connect()
 			exit(1);
 		}
 
-		instance = std::unique_ptr<DataBase>(new DataBase(params["DB_NAME"], params["DB_USER"], params["DB_PASSWORD"], params["DB_HOST"], params["DB_PORT"]));
+		instance = std::unique_ptr<Database>(new Database(params["DB_NAME"], params["DB_USER"], params["DB_PASSWORD"], params["DB_HOST"], params["DB_PORT"]));
 	}
 }

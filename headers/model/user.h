@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#include "data_base.h"
+#include "../app/database.h"
 #include <string>
 
 class User
