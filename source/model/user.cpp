@@ -1,4 +1,4 @@
-#include "user.h"
+#include "../../headers/model/user.h"
 
 User::User(
 	const int id,

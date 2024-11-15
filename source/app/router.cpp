@@ -1,7 +1,7 @@
-#include "router.h"
-#include "login_controller.h"
-#include "error.h"
-#include "view.h"
+#include "../../headers/app/router.h"
+#include "../../headers/controller/login_controller.h"
+#include "../../headers/app/error.h"
+#include "../../headers/view/view.h"
 
 void Router::init_routes(crow::SimpleApp& app)
 {
@@ -84,7 +84,7 @@ void Router::init_routes(crow::SimpleApp& app)
 			if (req.method == crow::HTTPMethod::GET)
 			{
 				res.code = 200;
-				res.body = View::load_css_file(cssFile);
+				res.body = View::load_css_file("resources/static/" + cssFile);
 				res.set_header("Content-Type", "text/css");
 
 				if (res.body.empty())

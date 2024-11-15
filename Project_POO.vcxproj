@@ -134,39 +134,39 @@
   <ItemGroup>
     <None Include=".env" />
     <None Include=".gitignore" />
-    <None Include="admin.css" />
-    <None Include="admin.html" />
-    <None Include="error.css" />
-    <None Include="error.html" />
-    <None Include="login.css" />
-    <None Include="login.html" />
-    <None Include="professor.css" />
-    <None Include="professor.html" />
     <None Include="readme.md" />
-    <None Include="student.css" />
-    <None Include="student.html" />
+    <None Include="Resources\Static\admin.css" />
+    <None Include="Resources\Static\error.css" />
+    <None Include="Resources\Static\login.css" />
+    <None Include="Resources\Static\professor.css" />
+    <None Include="Resources\Static\student.css" />
+    <None Include="Resources\Templates\admin.html" />
+    <None Include="Resources\Templates\error.html" />
+    <None Include="Resources\Templates\login.html" />
+    <None Include="Resources\Templates\professor.html" />
+    <None Include="Resources\Templates\student.html" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="error.cpp" />
-    <ClCompile Include="user_service.cpp" />
-    <ClCompile Include="data_base.cpp" />
-    <ClCompile Include="login_controller.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="router.cpp" />
-    <ClCompile Include="user.cpp" />
-    <ClCompile Include="view.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="error.h" />
-    <ClInclude Include="user_service.h" />
-    <ClInclude Include="data_base.h" />
-    <ClInclude Include="login_controller.h" />
-    <ClInclude Include="router.h" />
-    <ClInclude Include="user.h" />
-    <ClInclude Include="view.h" />
+    <ClCompile Include="Source\App\database.cpp" />
+    <ClCompile Include="Source\App\error.cpp" />
+    <ClCompile Include="Source\App\router.cpp" />
+    <ClCompile Include="Source\Controller\login_controller.cpp" />
+    <ClCompile Include="Source\Model\user.cpp" />
+    <ClCompile Include="Source\Service\user_service.cpp" />
+    <ClCompile Include="Source\View\view.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".env.example" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\App\database.h" />
+    <ClInclude Include="Headers\App\error.h" />
+    <ClInclude Include="Headers\App\router.h" />
+    <ClInclude Include="Headers\Controller\login_controller.h" />
+    <ClInclude Include="Headers\Model\user.h" />
+    <ClInclude Include="Headers\Service\user_service.h" />
+    <ClInclude Include="Headers\View\view.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

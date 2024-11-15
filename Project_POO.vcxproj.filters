@@ -52,89 +52,89 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="readme.md" />
-    <None Include="login.html">
-      <Filter>Resource Files\Templates</Filter>
-    </None>
-    <None Include="login.css">
-      <Filter>Resource Files\Static</Filter>
-    </None>
-    <None Include="admin.html">
-      <Filter>Resource Files\Templates</Filter>
-    </None>
-    <None Include="admin.css">
-      <Filter>Resource Files\Static</Filter>
-    </None>
-    <None Include="student.css">
-      <Filter>Resource Files\Static</Filter>
-    </None>
-    <None Include="professor.css">
-      <Filter>Resource Files\Static</Filter>
-    </None>
-    <None Include="student.html">
-      <Filter>Resource Files\Templates</Filter>
-    </None>
-    <None Include="professor.html">
-      <Filter>Resource Files\Templates</Filter>
-    </None>
-    <None Include="error.css">
-      <Filter>Resource Files\Static</Filter>
-    </None>
-    <None Include="error.html">
-      <Filter>Resource Files\Templates</Filter>
-    </None>
     <None Include=".env" />
+    <None Include="readme.md" />
+    <None Include="Resources\Static\admin.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="Resources\Static\error.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="Resources\Static\login.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="Resources\Static\professor.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="Resources\Static\student.css">
+      <Filter>Resource Files\Static</Filter>
+    </None>
+    <None Include="Resources\Templates\admin.html">
+      <Filter>Resource Files\Templates</Filter>
+    </None>
+    <None Include="Resources\Templates\error.html">
+      <Filter>Resource Files\Templates</Filter>
+    </None>
+    <None Include="Resources\Templates\login.html">
+      <Filter>Resource Files\Templates</Filter>
+    </None>
+    <None Include="Resources\Templates\professor.html">
+      <Filter>Resource Files\Templates</Filter>
+    </None>
+    <None Include="Resources\Templates\student.html">
+      <Filter>Resource Files\Templates</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="router.cpp">
+    <ClCompile Include="Source\App\database.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="login_controller.cpp">
+    <ClCompile Include="Source\App\error.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App\router.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Controller\login_controller.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="data_base.cpp">
-      <Filter>Source Files\App</Filter>
-    </ClCompile>
-    <ClCompile Include="view.cpp">
-      <Filter>Source Files\View</Filter>
-    </ClCompile>
-    <ClCompile Include="user.cpp">
+    <ClCompile Include="Source\Model\user.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="user_service.cpp">
+    <ClCompile Include="Source\Service\user_service.cpp">
       <Filter>Source Files\Service</Filter>
     </ClCompile>
-    <ClCompile Include="error.cpp">
-      <Filter>Source Files\App</Filter>
+    <ClCompile Include="Source\View\view.cpp">
+      <Filter>Source Files\View</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="router.h">
-      <Filter>Header Files\App</Filter>
-    </ClInclude>
-    <ClInclude Include="login_controller.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="data_base.h">
-      <Filter>Header Files\App</Filter>
-    </ClInclude>
-    <ClInclude Include="view.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
-    <ClInclude Include="user.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="user_service.h">
-      <Filter>Header Files\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="error.h">
-      <Filter>Header Files\App</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".env.example" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\App\database.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\App\error.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\App\router.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Controller\login_controller.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Model\user.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Service\user_service.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\View\view.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

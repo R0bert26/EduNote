@@ -2,7 +2,7 @@
 #define USERSERVICE_H
 
 #include <string>
-#include "user.h"
+#include "../model/user.h"
 
 class UserService
 {

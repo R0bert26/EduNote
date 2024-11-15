@@ -1,11 +1,11 @@
-#include "user_service.h"
+#include "../../headers/service/user_service.h"
 #include <iostream>
 
 bool UserService::check_auth(const std::string& email, const std::string& password)
 {
 	int id = 0;
 
-	DataBase::session() << "SELECT id FROM users WHERE email = :email AND password = :password",
+	Database::session() << "SELECT id FROM users WHERE email = :email AND password = :password",
 		soci::into(id), soci::use(email), soci::use(password);
 
 	return (id != 0);
@@ -18,7 +18,7 @@ User UserService::get_user(const std::string& email, const std::string& password
 	std::string lastName = "";
 	std::string role = "";
 
-	DataBase::session() << "SELECT id, first_name, last_name, role FROM users WHERE email = :email AND password = :password",
+	Database::session() << "SELECT id, first_name, last_name, role FROM users WHERE email = :email AND password = :password",
 		soci::into(id), soci::into(firstName), soci::into(lastName), soci::into(role), soci::use(email), soci::use(password);
 
 	if (id == 0 || firstName == "" || lastName == "" || role == "")
