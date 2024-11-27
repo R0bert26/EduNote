@@ -3,7 +3,9 @@
 #include <iostream>
 #include <sstream>
 
+
 std::unique_ptr<Database> Database::instance = nullptr;
+
 
 Database::Database(
 	const std::string& dbName,
@@ -12,6 +14,7 @@ Database::Database(
 	const std::string& host,
 	const std::string& port) :
 	sql(soci::postgresql, "dbname=" + dbName + " user=" + user + " password=" + password + " host=" + host + " port=" + port) {}
+
 
 std::unordered_map<std::string, std::string> Database::getParams()
 {
@@ -42,6 +45,7 @@ std::unordered_map<std::string, std::string> Database::getParams()
 	return params;
 }
 
+
 soci::session& Database::session()
 {
 	if (!instance)
@@ -53,6 +57,7 @@ soci::session& Database::session()
 
 	return instance->sql;
 }
+
 
 void Database::connect()
 {

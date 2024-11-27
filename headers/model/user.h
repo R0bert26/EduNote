@@ -1,8 +1,10 @@
 #ifndef USER_H
 #define USER_H
 
-#include "../app/database.h"
+
 #include <string>
+#include "../app/database.h"
+
 
 class User
 {
@@ -25,10 +27,15 @@ public:
 
 private:
 	int id;
+
 	std::string firstName;
+
 	std::string lastName;
+
 	std::string email;
+
 	std::string role;
 };
+
 
 #endif

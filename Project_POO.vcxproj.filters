@@ -110,6 +110,9 @@
     <ClCompile Include="Source\View\view.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
+    <ClCompile Include="source\model\session.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".env.example" />
@@ -135,6 +138,9 @@
     </ClInclude>
     <ClInclude Include="Headers\View\view.h">
       <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\model\session.h">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
