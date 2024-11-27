@@ -1,10 +1,12 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <soci/soci.h>
-#include <soci/postgresql/soci-postgresql.h>
+
 #include <string>
+#include <soci/soci.h>
 #include <unordered_map>
+#include <soci/postgresql/soci-postgresql.h>
+
 
 class Database
 {
@@ -27,5 +29,6 @@ private:
 
 	static std::unordered_map<std::string, std::string> getParams();
 };
+
 
 #endif

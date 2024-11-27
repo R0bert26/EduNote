@@ -1,6 +1,7 @@
 #include "../../headers/service/user_service.h"
 #include <iostream>
 
+
 bool UserService::check_auth(const std::string& email, const std::string& password)
 {
 	int id = 0;
@@ -10,6 +11,7 @@ bool UserService::check_auth(const std::string& email, const std::string& passwo
 
 	return (id != 0);
 }
+
 
 User UserService::get_user(const std::string& email, const std::string& password)
 {
@@ -23,8 +25,6 @@ User UserService::get_user(const std::string& email, const std::string& password
 
 	if (id == 0 || firstName == "" || lastName == "" || role == "")
 	{
-		std::cerr << "\nError Getting User\n" << std::endl;
-
 		return User(0, "", "", "", "");
 	}
 

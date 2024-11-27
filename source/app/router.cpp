@@ -2,6 +2,8 @@
 #include "../../headers/controller/login_controller.h"
 #include "../../headers/app/error.h"
 #include "../../headers/view/view.h"
+#include "../../headers/model/session.h"
+
 
 void Router::init_routes(crow::SimpleApp& app)
 {
@@ -11,88 +13,89 @@ void Router::init_routes(crow::SimpleApp& app)
 		{
 			if (req.method == crow::HTTPMethod::GET)
 			{
-				res.code = 200;
-				res.body = crow::mustache::load_text("login.html");
-				res.set_header("Content-Type", "text/html");
-
-				if (res.body.empty())
-				{
-					Error::generate_error_page(res, 404, "Page Not Found");
-				}
+				View::render(res, req, "login.html");
 			}
 			else if (req.method == crow::HTTPMethod::POST)
 			{
 				loginController.login(req, res);
 			}
-
-			res.end();
+			else
+			{
+				Error::generate_error_page(res, 405, "Method Not Allowed");
+			}
 		});
 
 	CROW_ROUTE(app, "/admin").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res)
 		{
-			if (req.method == crow::HTTPMethod::GET)
+			if (Session::get_current_session().get_role() == "admin")
 			{
-				res.code = 200;
-				res.body = crow::mustache::load_text("admin.html");
-				res.set_header("Content-Type", "text/html");
-
-				if (res.body.empty())
+				if (req.method == crow::HTTPMethod::GET)
 				{
-					Error::generate_error_page(res, 404, "Page Not Found");
+					View::render(res, req, "admin.html");
+				}
+				else
+				{
+					Error::generate_error_page(res, 405, "Method Not Allowed");
 				}
 			}
-
-			res.end();
+			else
+			{
+				Error::generate_error_page(res, 401, "Access Unauthorized");
+			}
 		});
 
 	CROW_ROUTE(app, "/student").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res)
 		{
-			if (req.method == crow::HTTPMethod::GET)
+			if (Session::get_current_session().get_role() == "student")
 			{
-				res.code = 200;
-				res.body = crow::mustache::load_text("student.html");
-				res.set_header("Content-Type", "text/html");
-
-				if (res.body.empty())
+				if (req.method == crow::HTTPMethod::GET)
 				{
-					Error::generate_error_page(res, 404, "Page Not Found");
+					View::render(res, req, "student.html");
+				}
+				else
+				{
+					Error::generate_error_page(res, 405, "Method Not Allowed");
 				}
 			}
-
-			res.end();
+			else
+			{
+				Error::generate_error_page(res, 401, "Access Unauthorized");
+			}
 		});
 
 	CROW_ROUTE(app, "/professor").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res)
 		{
-			if (req.method == crow::HTTPMethod::GET)
+			if (Session::get_current_session().get_role() == "professor")
 			{
-				res.code = 200;
-				res.body = crow::mustache::load_text("professor.html");
-				res.set_header("Content-Type", "text/html");
-
-				if (res.body.empty())
+				if (req.method == crow::HTTPMethod::GET)
 				{
-					Error::generate_error_page(res, 404, "Page Not Found");
+					View::render(res, req, "professor.html");
+				}
+				else
+				{
+					Error::generate_error_page(res, 405, "Method Not Allowed");
 				}
 			}
-
-			res.end();
+			else
+			{
+				Error::generate_error_page(res, 401, "Access Unauthorized");
+			}
 		});
 
 	CROW_ROUTE(app, "/static/<string>").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res, const std::string& cssFile)
 		{
 			if (req.method == crow::HTTPMethod::GET)
 			{
-				res.code = 200;
-				res.body = View::load_css_file("resources/static/" + cssFile);
-				res.set_header("Content-Type", "text/css");
-
-				if (res.body.empty())
-				{
-					Error::generate_error_page(res, 404, "Page Not Found");
-				}
+				View::load_css_file(res, "resources/static/" + cssFile);
 			}
+			else
+			{
+				Error::generate_error_page(res, 405, "Method Not Allowed");
+			}
+		});
 
-			res.end();
+	CROW_ROUTE(app, "/<path>")([](const crow::request& req, crow::response& res, const auto& path)
+		{
+			Error::generate_error_page(res, 404, "Page Not Found");
 		});
 }

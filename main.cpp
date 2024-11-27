@@ -3,6 +3,7 @@
 #include "headers/app/database.h"
 #include "headers/app/router.h"
 
+
 int main()
 {
 	try
@@ -19,15 +20,14 @@ int main()
 	}
 
 	crow::SimpleApp app;
-	Router router;
 	const int port = 18080;
 
 	crow::mustache::set_global_base("resources/templates");
 
+	Router router;
 	router.init_routes(app);
 
 	std::cout << "Server started on port " << port << "\n" << std::endl;
-
 	app.port(port).multithreaded().run();
 
 	return 0;

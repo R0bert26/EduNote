@@ -152,6 +152,7 @@
     <ClCompile Include="Source\App\error.cpp" />
     <ClCompile Include="Source\App\router.cpp" />
     <ClCompile Include="Source\Controller\login_controller.cpp" />
+    <ClCompile Include="source\model\session.cpp" />
     <ClCompile Include="Source\Model\user.cpp" />
     <ClCompile Include="Source\Service\user_service.cpp" />
     <ClCompile Include="Source\View\view.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Headers\App\error.h" />
     <ClInclude Include="Headers\App\router.h" />
     <ClInclude Include="Headers\Controller\login_controller.h" />
+    <ClInclude Include="headers\model\session.h" />
     <ClInclude Include="Headers\Model\user.h" />
     <ClInclude Include="Headers\Service\user_service.h" />
     <ClInclude Include="Headers\View\view.h" />

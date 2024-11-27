@@ -1,6 +1,8 @@
 #include "../../headers/controller/login_controller.h"
 #include "../../headers/service/user_service.h"
 #include "../../headers/app/error.h"
+#include "../../headers/model/session.h"
+
 
 void LoginController::login(const crow::request& req, crow::response& res)
 {
@@ -19,21 +21,23 @@ void LoginController::login(const crow::request& req, crow::response& res)
 		}
 		else
 		{
+			Session::create_session(user);
+
 			if (user.get_role() == "admin")
 			{
-				res.code = 302;
 				res.set_header("Location", "/admin");
 			}
 			else if (user.get_role() == "student")
 			{
-				res.code = 302;
 				res.set_header("Location", "/student");
 			}
 			else if (user.get_role() == "professor")
 			{
-				res.code = 302;
 				res.set_header("Location", "/professor");
 			}
+
+			res.code = 302;
+			res.end();
 		}
 	}
 	else
