@@ -113,6 +113,9 @@
     <ClCompile Include="source\model\session.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="source\service\hashing_service.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".env.example" />
@@ -141,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="headers\model\session.h">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\service\hashing_service.h">
+      <Filter>Header Files\Service</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,27 +1,29 @@
-#include "../../headers/service/user_service.h"
 #include <iostream>
+#include <string>
+#include "../../headers/service/user_service.h"
+#include "../../headers/service/hashing_service.h"
 
 
 bool UserService::check_auth(const std::string& email, const std::string& password)
 {
-	int id = 0;
+	std::string hashedPassword;
 
-	Database::session() << "SELECT id FROM users WHERE email = :email AND password = :password",
-		soci::into(id), soci::use(email), soci::use(password);
+	Database::session() << "SELECT password FROM users WHERE email = :email",
+		soci::into(hashedPassword), soci::use(email);
 
-	return (id != 0);
+	return HashingService::verify_password(password, hashedPassword);
 }
 
 
-User UserService::get_user(const std::string& email, const std::string& password)
+User UserService::get_user(const std::string& email)
 {
 	int id = 0;
 	std::string firstName = "";
 	std::string lastName = "";
 	std::string role = "";
 
-	Database::session() << "SELECT id, first_name, last_name, role FROM users WHERE email = :email AND password = :password",
-		soci::into(id), soci::into(firstName), soci::into(lastName), soci::into(role), soci::use(email), soci::use(password);
+	Database::session() << "SELECT id, first_name, last_name, role FROM users WHERE email = :email",
+		soci::into(id), soci::into(firstName), soci::into(lastName), soci::into(role), soci::use(email);
 
 	if (id == 0 || firstName == "" || lastName == "" || role == "")
 	{

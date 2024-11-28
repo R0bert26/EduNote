@@ -154,6 +154,7 @@
     <ClCompile Include="Source\Controller\login_controller.cpp" />
     <ClCompile Include="source\model\session.cpp" />
     <ClCompile Include="Source\Model\user.cpp" />
+    <ClCompile Include="source\service\hashing_service.cpp" />
     <ClCompile Include="Source\Service\user_service.cpp" />
     <ClCompile Include="Source\View\view.cpp" />
   </ItemGroup>
@@ -167,6 +168,7 @@
     <ClInclude Include="Headers\Controller\login_controller.h" />
     <ClInclude Include="headers\model\session.h" />
     <ClInclude Include="Headers\Model\user.h" />
+    <ClInclude Include="headers\service\hashing_service.h" />
     <ClInclude Include="Headers\Service\user_service.h" />
     <ClInclude Include="Headers\View\view.h" />
   </ItemGroup>

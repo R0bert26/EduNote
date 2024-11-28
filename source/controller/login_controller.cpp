@@ -13,7 +13,7 @@ void LoginController::login(const crow::request& req, crow::response& res)
 
 	if (UserService::check_auth(email, password))
 	{
-		User user = UserService::get_user(email, password);
+		User user = UserService::get_user(email);
 
 		if (user.get_id() == 0)
 		{
