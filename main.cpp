@@ -33,7 +33,7 @@ int main()
 	router.init_routes(app);
 
 	std::cout << "Server started on port " << port << "\n" << std::endl;
-	app.port(port).run();
+	app.port(port).multithreaded().run();
 
 	return 0;
 }

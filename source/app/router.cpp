@@ -25,17 +25,16 @@ void Router::init_routes(crow::SimpleApp& app)
 			}
 		});
 
-	CROW_ROUTE(app, "/admin").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res)
+	CROW_ROUTE(app, "/admin").methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)([](const crow::request& req, crow::response& res)
 		{
 			if (Session::get_current_session().get_role() == "admin")
 			{
-				if (req.method == crow::HTTPMethod::GET)
+				View::render(res, req, "admin.html");
+
+				if (req.method == crow::HTTPMethod::POST)
 				{
-					View::render(res, req, "admin.html");
-				}
-				else
-				{
-					Error::generate_error_page(res, 405, "Method Not Allowed");
+					res.code = 200;
+					res.end();
 				}
 			}
 			else
@@ -87,6 +86,18 @@ void Router::init_routes(crow::SimpleApp& app)
 			if (req.method == crow::HTTPMethod::GET)
 			{
 				View::load_css_file(res, "resources/static/" + cssFile);
+			}
+			else
+			{
+				Error::generate_error_page(res, 405, "Method Not Allowed");
+			}
+		});
+
+	CROW_ROUTE(app, "/script/<string>").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res, const std::string& jsFile)
+		{
+			if (req.method == crow::HTTPMethod::GET)
+			{
+				View::load_css_file(res, "resources/script/" + jsFile);
 			}
 			else
 			{

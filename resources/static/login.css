@@ -29,11 +29,11 @@ body {
     margin: 20px 0 40px 0;
 }
 
-    .login-header header {
-        color: #333;
-        font-size: 60px;
-        font-weight: 600;
-    }
+.login-header header {
+    color: #333;
+    font-size: 60px;
+    font-weight: 600;
+}
 
 .input-field {
     width: 100%;
@@ -73,6 +73,6 @@ body {
     font-size: 20px;
 }
 
-    .submit-btn:hover {
-        background: #111;
-    }
+.submit-btn:hover {
+    background: #111;
+}
