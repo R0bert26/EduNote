@@ -135,6 +135,7 @@
     <None Include=".env" />
     <None Include=".gitignore" />
     <None Include="readme.md" />
+    <None Include="resources\script\admin.js" />
     <None Include="Resources\Static\admin.css" />
     <None Include="Resources\Static\error.css" />
     <None Include="Resources\Static\login.css" />
