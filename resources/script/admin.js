@@ -8,14 +8,13 @@ function show_section(sectionId) {
 
 function handle_submit(event, sectionId) {
     const form = event.target;
-    form.reset();
-
-    if (sectionId === 'add-user' || sectionId === 'delete-user') {
-        const message = document.getElementById(`${sectionId}-msg`);
-        message.classList.add('visible');
-
-        setTimeout(() => {
-            message.classList.remove('visible');
-        }, 5000000);
+    
+    if (sectionId === 'add-user') {
+        alert('User added successfully');
     }
+    else if (sectionId === 'delete-user') {
+        alert('User deleted successfully');
+    }
+
+    form.reset();
 }
