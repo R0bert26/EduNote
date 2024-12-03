@@ -5,7 +5,6 @@ function show_section(sectionId) {
     document.getElementById(sectionId).classList.add('active');
 }
 
-
 function handle_submit(event, sectionId) {
     const form = event.target;
     
@@ -16,5 +15,4 @@ function handle_submit(event, sectionId) {
         alert('User deleted successfully');
     }
 
-    form.reset();
 }

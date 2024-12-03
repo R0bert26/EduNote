@@ -8,7 +8,7 @@
 class LoginController
 {
 public:
-	void login(const crow::request& req, crow::response& res);
+	static void login(const crow::request& req, crow::response& res);
 };
 
 

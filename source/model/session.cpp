@@ -13,8 +13,6 @@ void Session::create_session(const User& user)
 void Session::logout()
 {
 	currentUser = User(0, "", "", "", "");
-
-	// TODO: implement logout
 }
 
 
