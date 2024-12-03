@@ -110,7 +110,7 @@
     <ClCompile Include="Source\Model\user.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Service\user_service.cpp">
+    <ClCompile Include="Source\Service\auth_service.cpp">
       <Filter>Source Files\Service</Filter>
     </ClCompile>
     <ClCompile Include="Source\View\view.cpp">
@@ -121,6 +121,15 @@
     </ClCompile>
     <ClCompile Include="source\service\hashing_service.cpp">
       <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="source\controller\admin_controller.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="source\controller\professor_controller.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="source\controller\student_controller.cpp">
+      <Filter>Source Files\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,7 +151,7 @@
     <ClInclude Include="Headers\Model\user.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Service\user_service.h">
+    <ClInclude Include="Headers\Service\auth_service.h">
       <Filter>Header Files\Service</Filter>
     </ClInclude>
     <ClInclude Include="Headers\View\view.h">
@@ -153,6 +162,15 @@
     </ClInclude>
     <ClInclude Include="headers\service\hashing_service.h">
       <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\controller\admin_controller.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\controller\professor_controller.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\controller\student_controller.h">
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

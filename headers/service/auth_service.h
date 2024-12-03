@@ -3,15 +3,12 @@
 
 
 #include <string>
-#include "../model/user.h"
 
 
-class UserService
+class AuthService
 {
 public:
 	static bool check_auth(const std::string& email, const std::string& password);
-
-	static User get_user(const std::string& email);
 };
 
 

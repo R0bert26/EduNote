@@ -1,7 +1,8 @@
 #include "../../headers/controller/login_controller.h"
-#include "../../headers/service/user_service.h"
+#include "../../headers/service/auth_service.h"
 #include "../../headers/app/error.h"
 #include "../../headers/model/session.h"
+#include "../../headers/model/user.h"
 
 
 void LoginController::login(const crow::request& req, crow::response& res)
@@ -11,9 +12,9 @@ void LoginController::login(const crow::request& req, crow::response& res)
 	std::string email = params.get("email");
 	std::string password = params.get("password");
 
-	if (UserService::check_auth(email, password))
+	if (AuthService::check_auth(email, password))
 	{
-		User user = UserService::get_user(email);
+		User user = User::get_user(email);
 
 		if (user.get_id() == 0)
 		{

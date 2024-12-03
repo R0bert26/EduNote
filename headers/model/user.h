@@ -25,6 +25,12 @@ public:
 
 	std::string get_last_name();
 
+	static User get_user(const std::string& email);
+
+	static bool add_user(const std::string& firstName, const std::string& lastName, const std::string& email, const std::string& password, const std::string& role);
+
+	static bool delete_user(const std::string& email);
+
 private:
 	int id;
 

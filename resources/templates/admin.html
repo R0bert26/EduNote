@@ -27,10 +27,12 @@
 
     <!-- Main -->
     <main>
+        <section id="home" class="section active">
+        </section>
+
         <!-- Add User Section -->
-        <section id="add-user" class="section active">
+        <section id="add-user" class="section">
             <h2>Add User</h2>
-            <p class="confirm-msg" id="add-user-msg">User added successfully</p>
             <form method="POST" class="user-form" onsubmit="handle_submit(event, 'add-user')">
                 <input class="input-field" type="hidden" name="action" value="add_user" />
                 <input class="input-field" type="text" name="first_name" placeholder="First Name" autocomplete="off" required />
@@ -54,15 +56,14 @@
         <!-- Delete User Section -->
         <section id="delete-user" class="section">
             <h2>Delete User</h2>
-            <p class="confirm-msg" id="delete-user-msg">User deleted succesfully</p>
-            <form method="POST" class="user-form" onsubmit="handle_submit(event, 'delete-user')">
+            <form method="POST" class="user-form"  onsubmit="handle_submit(event, 'delete-user')">
                 <input class="input-field" type="hidden" name="action" value="delete_user" />
                 <input class="input-field" type="email" name="email" placeholder="Email" autocomplete="off" required />
                 <button type="submit" class="form-btn">Delete</button>
             </form>
         </section>
 
-        <!-- Search/Display User Section -->
+        <!-- Search User Section -->
         <section id="search-user" class="section">
             <h2>Search User</h2>
             <form method="POST" class="user-form" onsubmit="handle_submit(event, 'search-user')">
@@ -81,5 +82,6 @@
 
     <!-- JS Scripts -->
     <script src="/script/admin.js"></script>
+    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 </body>
 </html>
