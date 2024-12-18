@@ -22,12 +22,12 @@
     <nav>
         <button class="nav-btn" onclick="show_section('add-user')">Add User</button>
         <button class="nav-btn" onclick="show_section('delete-user')">Delete User</button>
-        <button class="nav-btn" onclick="show_section('search-user')">Search User</button>
     </nav>
 
     <!-- Main -->
     <main>
         <section id="home" class="section active">
+            <h2>Admin Panel</h2>
         </section>
 
         <!-- Add User Section -->
@@ -56,21 +56,10 @@
         <!-- Delete User Section -->
         <section id="delete-user" class="section">
             <h2>Delete User</h2>
-            <form method="POST" class="user-form"  onsubmit="handle_submit(event, 'delete-user')">
+            <form method="POST" class="user-form" onsubmit="handle_submit(event, 'delete-user')">
                 <input class="input-field" type="hidden" name="action" value="delete_user" />
                 <input class="input-field" type="email" name="email" placeholder="Email" autocomplete="off" required />
                 <button type="submit" class="form-btn">Delete</button>
-            </form>
-        </section>
-
-        <!-- Search User Section -->
-        <section id="search-user" class="section">
-            <h2>Search User</h2>
-            <form method="POST" class="user-form" onsubmit="handle_submit(event, 'search-user')">
-                <input class="input-field" type="hidden" name="action" value="search_user" />
-                <input class="input-field" type="text" name="first_name" placeholder="First Name" autocomplete="off" required />
-                <input class="input-field" type="text" name="last_name" placeholder="Last Name" autocomplete="off" required />
-                <button type="submit" class="form-btn">Search</button>
             </form>
         </section>
     </main>

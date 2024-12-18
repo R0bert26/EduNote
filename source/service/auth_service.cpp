@@ -3,6 +3,7 @@
 #include "../../headers/service/auth_service.h"
 #include "../../headers/service/hashing_service.h"
 #include "../../headers/app/database.h"
+#include "../../headers/model/user.h"
 
 
 bool AuthService::check_auth(const std::string& email, const std::string& password)

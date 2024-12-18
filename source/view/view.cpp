@@ -29,24 +29,7 @@ void View::load_css_file(crow::response& res, const std::string& filePath)
 }
 
 
-void View::render(crow::response& res, const crow::request& req, const std::string& templateName)
-{
-	res.body = crow::mustache::load_text(templateName);
-
-	if (res.body.empty())
-	{
-		Error::generate_error_page(res, 404, "HTML File Not Found");
-	}
-	else
-	{
-		res.code = 200;
-		res.set_header("Content-Type", "text/html");
-		res.end();
-	}
-}
-
-
-void View::render(crow::response& res, const crow::request& req, const std::string& templateName, crow::mustache::context& ctx)
+void View::render(crow::response& res, const crow::request& req, const std::string& templateName, const crow::mustache::context& ctx)
 {
 	res.body = crow::mustache::load(templateName).render_string(ctx);
 

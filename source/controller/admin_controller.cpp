@@ -1,5 +1,5 @@
 #include "../../headers/controller/admin_controller.h"
-#include "../../headers/model/user.h"
+#include "../../headers/model/admin.h"
 #include "../../headers/app/error.h"
 #include "../../headers/model/session.h"
 
@@ -11,7 +11,7 @@ void AdminController::run(crow::response& res, const crow::request& req)
 
 	if (action == "add_user")
 	{
-		bool status = User::add_user(params.get("first_name"), params.get("last_name"), params.get("email"), params.get("password"), params.get("role"));
+		bool status = Admin::add_user(params.get("first_name"), params.get("last_name"), params.get("email"), params.get("password"), params.get("role"));
 
 		if (status)
 		{
@@ -26,8 +26,8 @@ void AdminController::run(crow::response& res, const crow::request& req)
 	}
 	else if (action == "delete_user")
 	{
-		bool status = User::delete_user(params.get("email"));
-	
+		bool status = Admin::delete_user(params.get("email"));
+
 		if (status)
 		{
 			res.set_header("Location", "/admin");

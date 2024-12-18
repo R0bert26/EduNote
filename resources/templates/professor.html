@@ -19,12 +19,64 @@
     </header>
 
     <main>
-        <h1>To Be Implemented</h1>
+        <!-- Courses List -->
+        <aside class="courses-list">
+            <h2>Courses</h2>
+
+            <ul id="course-list">
+                <li>{{course}}</li>
+                
+            </ul>
+
+            <button id="add-course-btn" class="add-btn" type="button">Add Course</button>
+        </aside>
+
+        <!-- Course Details -->
+        <section class="course-details">
+            <div class="course-details-header">
+                <h2 id="selected-course">Select a Course</h2>
+
+                <button id="add-student-btn" class="add-btn" type="button">Add Student</button>
+            </div>
+
+            <div class="student-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Grade</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="student-table-body">
+                        <!-- dynamic -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
     <footer>
         <p>&copy;2024 EduNote | All Rights Reserved</p>
     </footer>
+
+    <!-- Dialog Box for adding a new student or course -->
+    <div id="dialog" class="dialog">
+        <div class="dialog-content">
+            <div>
+                <span id="dialog-close" class="close-btn">X</span>
+
+                <h2 id="dialog-title"></h2>
+            </div>
+
+            <div id="dialog-body"></div>
+
+            <button id="dialog-confirm" class="confirm-btn">Confirm</button>
+        </div>
+    </div>
+
+    <script src="/script/professor.js"></script>
 </body>
 </html>

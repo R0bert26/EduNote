@@ -90,6 +90,9 @@
     <None Include="resources\script\admin.js">
       <Filter>Resource Files\Script</Filter>
     </None>
+    <None Include="resources\script\professor.js">
+      <Filter>Resource Files\Script</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -131,6 +134,9 @@
     <ClCompile Include="source\controller\student_controller.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="source\model\admin.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".env.example" />
@@ -171,6 +177,9 @@
     </ClInclude>
     <ClInclude Include="headers\controller\student_controller.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\model\admin.h">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
