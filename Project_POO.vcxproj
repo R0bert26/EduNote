@@ -136,6 +136,7 @@
     <None Include=".gitignore" />
     <None Include="readme.md" />
     <None Include="resources\script\admin.js" />
+    <None Include="resources\script\professor.js" />
     <None Include="Resources\Static\admin.css" />
     <None Include="Resources\Static\error.css" />
     <None Include="Resources\Static\login.css" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Source\Controller\login_controller.cpp" />
     <ClCompile Include="source\controller\professor_controller.cpp" />
     <ClCompile Include="source\controller\student_controller.cpp" />
+    <ClCompile Include="source\model\admin.cpp" />
     <ClCompile Include="source\model\session.cpp" />
     <ClCompile Include="Source\Model\user.cpp" />
     <ClCompile Include="source\service\hashing_service.cpp" />
@@ -173,6 +175,7 @@
     <ClInclude Include="Headers\Controller\login_controller.h" />
     <ClInclude Include="headers\controller\professor_controller.h" />
     <ClInclude Include="headers\controller\student_controller.h" />
+    <ClInclude Include="headers\model\admin.h" />
     <ClInclude Include="headers\model\session.h" />
     <ClInclude Include="Headers\Model\user.h" />
     <ClInclude Include="headers\service\hashing_service.h" />

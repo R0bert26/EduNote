@@ -9,7 +9,8 @@
 class User
 {
 public:
-	User(const int id,
+	User(
+		const int id,
 		const std::string& firstName,
 		const std::string& lastName,
 		const std::string& email,
@@ -27,9 +28,7 @@ public:
 
 	static User get_user(const std::string& email);
 
-	static bool add_user(const std::string& firstName, const std::string& lastName, const std::string& email, const std::string& password, const std::string& role);
-
-	static bool delete_user(const std::string& email);
+	virtual ~User();
 
 private:
 	int id;

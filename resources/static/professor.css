@@ -11,6 +11,9 @@
 body {
     background: #dfdfdf;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 /* Header */
@@ -40,13 +43,188 @@ header {
     transition: background-color 0.3s ease;
 }
 
-.logout-btn:hover {
-    color: #fff;
+    .logout-btn:hover {
+        color: #fff;
+    }
+
+/* Main Section*/
+main {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+/* Courses List */
+.courses-list {
+    display: flex;
+    flex-direction: column;
+    background-color: #dcdcdc;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 370px;
+}
+
+.courses-list h2 {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+
+aside ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.courses-list form {
+    margin-top: auto;
+    align-self: center;
+}
+
+.add-btn {
+    align-self: center;
+    padding: 5px 15px;
+    background-color: #333;
+    border: none;
+    border-radius: 20px;
+    color: #dfdfdf;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+aside .add-btn {
+    margin-top: auto;
+}
+
+.add-btn:hover {
+    background-color: #555;
+}
+
+/* Course Details */
+.course-details {
+    background-color: #dcdcdc;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    flex: 1;
+}
+
+.course-details h2 {
+    margin-top: 0;
+    padding-bottom: 5px;
+}
+
+.course-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #333;
+    margin-bottom: 10px;
+}
+
+.course-details button {
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #333;
+    padding: 2px 4px;
+    text-align: left;
+}
+
+th {
+    background-color: #d8d8d8;
+    font-size: 15px;
+}
+
+td {
+    font-size: 13px;
+}
+
+.no-data {
+    text-align: center;
+}
+
+/* Dialog Box */
+.dialog {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #dcdcdc;
+    margin: 15% auto;
+    padding: 20px;
+    border: none;
+    box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.2); 
+    width: 50%;
+    border-radius: 8px;
+}
+
+.close-btn {
+    color: #333;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #555;
+}
+
+.confirm-btn {
+    align-self: center;
+    margin-top: 10px;
+    padding: 5px 15px;
+    background-color: #333;
+    border: none;
+    border-radius: 20px;
+    color: #dfdfdf;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.confirm-btn:hover {
+    background-color: #555;
+}
+
+#dialog-body input {
+    width: 100%;
+    height: 30px;
+    font-size: 14px;
+    padding: 0 15px;
+    margin: 10px 0;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+#dialog-body input:focus {
+    box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.3);
 }
 
 /* Footer */
 footer {
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
     text-align: center;
