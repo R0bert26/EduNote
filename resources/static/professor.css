@@ -103,6 +103,30 @@ aside .add-btn {
     background-color: #555;
 }
 
+.course-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 2px;
+}
+
+.delete-btn {
+    align-self: center;
+    color: #777;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.delete-btn:hover {
+    color: #555;
+}
+
+.course-item p:hover {
+    
+    font-weight: 500;
+    cursor: pointer;
+}
+
 /* Course Details */
 .course-details {
     background-color: #dcdcdc;
@@ -134,23 +158,38 @@ table {
     border-collapse: collapse;
 }
 
+.hidden {
+    display: none;
+}
+
 th, td {
-    border: 1px solid #333;
-    padding: 2px 4px;
     text-align: left;
 }
 
 th {
-    background-color: #d8d8d8;
-    font-size: 15px;
+    font-size: 17px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 8px;
 }
 
 td {
-    font-size: 13px;
+    font-size: 15px;
 }
 
-.no-data {
+.student-grade, .student-actions {
     text-align: center;
+}
+
+.edit-grade-btn, delete-btn {
+    color: #777;
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin: 0 4px;
+}
+
+.edit-grade-btn:hover, delete-btn:hover {
+    color: #555;
 }
 
 /* Dialog Box */

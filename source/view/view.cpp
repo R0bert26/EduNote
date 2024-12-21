@@ -5,7 +5,7 @@
 #include "../../headers/app/error.h"
 
 
-void View::load_css_file(crow::response& res, const std::string& filePath)
+void View::load_static_file(crow::response& res, const std::string& filePath)
 {
 	std::ifstream file(filePath);
 

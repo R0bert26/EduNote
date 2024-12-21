@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -109,6 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,10 +159,15 @@
     <ClCompile Include="source\controller\professor_controller.cpp" />
     <ClCompile Include="source\controller\student_controller.cpp" />
     <ClCompile Include="source\model\admin.cpp" />
+    <ClCompile Include="source\model\course.cpp" />
+    <ClCompile Include="source\model\enrollment.cpp" />
+    <ClCompile Include="source\model\professor.cpp" />
     <ClCompile Include="source\model\session.cpp" />
+    <ClCompile Include="source\model\student.cpp" />
     <ClCompile Include="Source\Model\user.cpp" />
     <ClCompile Include="source\service\hashing_service.cpp" />
     <ClCompile Include="Source\Service\auth_service.cpp" />
+    <ClCompile Include="source\service\JsonService.cpp" />
     <ClCompile Include="Source\View\view.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,10 +182,15 @@
     <ClInclude Include="headers\controller\professor_controller.h" />
     <ClInclude Include="headers\controller\student_controller.h" />
     <ClInclude Include="headers\model\admin.h" />
+    <ClInclude Include="headers\model\course.h" />
+    <ClInclude Include="headers\model\enrollment.h" />
+    <ClInclude Include="headers\model\professor.h" />
     <ClInclude Include="headers\model\session.h" />
+    <ClInclude Include="headers\model\student.h" />
     <ClInclude Include="Headers\Model\user.h" />
     <ClInclude Include="headers\service\hashing_service.h" />
     <ClInclude Include="Headers\Service\auth_service.h" />
+    <ClInclude Include="headers\service\JsonService.h" />
     <ClInclude Include="Headers\View\view.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

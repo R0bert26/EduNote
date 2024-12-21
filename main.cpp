@@ -4,7 +4,6 @@
 #include "headers/app/database.h"
 #include "headers/app/router.h"
 
-
 int main()
 {
 	try

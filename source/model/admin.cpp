@@ -9,8 +9,7 @@ Admin::Admin(
 	const std::string& lastName,
 	const std::string& email,
 	const std::string& role) :
-	User(id, firstName, lastName, email, role)
-{}
+	User(id, firstName, lastName, email, role) {}
 
 
 bool Admin::add_user(const std::string& firstName, const std::string& lastName, const std::string& email, const std::string& password, const std::string& role)
