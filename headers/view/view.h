@@ -9,7 +9,7 @@
 class View
 {
 public:
-	static void load_css_file(crow::response& res, const std::string& fileName);
+	static void load_static_file(crow::response& res, const std::string& fileName);
 
 	static void render(crow::response& res, const crow::request& req, const std::string& templateName, const crow::mustache::context& ctx = {});
 };

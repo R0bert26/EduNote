@@ -81,12 +81,12 @@ void Router::init_routes(crow::SimpleApp& app)
 
 	CROW_ROUTE(app, "/static/<string>").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res, const std::string& cssFile)
 		{
-			View::load_css_file(res, "resources/static/" + cssFile);		
+			View::load_static_file(res, "resources/static/" + cssFile);		
 		});
 
 	CROW_ROUTE(app, "/script/<string>").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res, const std::string& jsFile)
 		{
-			View::load_css_file(res, "resources/script/" + jsFile);
+			View::load_static_file(res, "resources/script/" + jsFile);
 		});
 
 	CROW_ROUTE(app, "/<path>")([](const crow::request& req, crow::response& res, const auto& path)

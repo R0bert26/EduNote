@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Professor Page</title>
     <link rel="stylesheet" href="/static/professor.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
     <!-- Header -->
     <header>
         <div class="logo">EduNote</div>
-        <form method="POST">
-            <input type="hidden" name="action" value="logout">
-            <button class="logout-btn" type="submit">Logout</button>
-        </form>
+        
+        <button class="logout-btn" type="button">Logout</button>
     </header>
 
     <main>
@@ -23,10 +22,7 @@
         <aside class="courses-list">
             <h2>Courses</h2>
 
-            <ul id="course-list">
-                <li>{{course}}</li>
-                
-            </ul>
+            <ul id="courses-list"></ul>
 
             <button id="add-course-btn" class="add-btn" type="button">Add Course</button>
         </aside>
@@ -36,20 +32,22 @@
             <div class="course-details-header">
                 <h2 id="selected-course">Select a Course</h2>
 
-                <button id="add-student-btn" class="add-btn" type="button">Add Student</button>
+                <div class="hidden">
+                    <button id="add-student-btn" class="add-btn" type="button">Add Student</button>
+                </div>
             </div>
 
             <div class="student-list">
                 <table>
-                    <thead>
+                    <thead class="hidden">
                         <tr>
                             <th>Name</th>
-                            <th>Grade</th>
-                            <th>Action</th>
+                            <th class="student-grade">Grade</th>
+                            <th class="student-actions">Action</th>
                         </tr>
                     </thead>
 
-                    <tbody id="student-table-body">
+                    <tbody id="enrollment-list">
                         <!-- dynamic -->
                     </tbody>
                 </table>
@@ -73,7 +71,7 @@
 
             <div id="dialog-body"></div>
 
-            <button id="dialog-confirm" class="confirm-btn">Confirm</button>
+            <button id="confirm-btn" class="confirm-btn">Confirm</button>
         </div>
     </div>
 

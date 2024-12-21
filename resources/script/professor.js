@@ -1,45 +1,168 @@
-const addCourseBtn = document.querySelector('#add-course-btn');
-const addStudentBtn = document.querySelector('#add-student-btn');
+﻿const logoutBtn = document.querySelector('.logout-btn');
 const dialog = document.querySelector('#dialog');
 const dialogTitle = document.querySelector('#dialog-title');
 const dialogBody = document.querySelector('#dialog-body');
 const dialogCancel = document.querySelector('#dialog-cancel');
-const dialogConfirm = document.querySelector('#dialog-confirm');
+const dialogConfirm = document.querySelector('#confirm-btn');
 const dialogClose = document.querySelector('#dialog-close');
-let action = '';
+const addCourseBtn = document.querySelector('#add-course-btn');
+const addStudentBtn = document.querySelector('#add-student-btn');
+const selectedCourse = document.querySelector('#selected-course');
+let selectedCourseId = null;
 
-function send_data(action) {
-    let inputData = null;
 
-    if (action == 'add_course') {
-        const courseName = document.querySelector('#course-name-input').value.trim();
+async function process_data(inputData) {
+    const params = JSON.stringify(inputData);
 
-        inputData = {
-            action: action,
-            course: courseName
-        };
-    } else if (action == 'add_student') {
-        const studentEmail = document.querySelector('#student-email-input').value.trim();
-
-        inputData = {
-            action: action,
-            email: studentEmail
-        };
-    }
-
-    const endpoint = '/professor';
-    const params = new URLSearchParams(inputData).toString();
-
-    fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: params
-    })
-        .catch(error => {
-            console.error('Error:', error);
+    try {
+        const response = await fetch('/professor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: params
         });
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data
+
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+        throw new Error(`Error: ${error.message}`);
+    }
+}
+
+
+function update_courses_list(courses) {
+    const coursesList = document.querySelector('#courses-list');
+    coursesList.innerHTML = "";
+
+    courses.forEach(course => {
+        const courseItem = document.createElement('li');
+        courseItem.classList.add('course-item');
+        courseItem.id = course.id;
+        courseItem.innerHTML =
+            `<p>${course.name}</p>
+            <button class="delete-btn material-icons" type="button">delete</button>`;
+
+        const selectedCourse = courseItem.querySelector('p');
+        selectedCourse.addEventListener('click', () => select_course(course.id));
+
+        const deleteBtn = courseItem.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', () => delete_course(course.id));
+
+        coursesList.appendChild(courseItem);
+    });
+}
+
+
+function update_enrollment_list(enrollments) {
+    const enrollmentList = document.querySelector('#enrollment-list');
+    enrollmentList.innerHTML = "";
+
+    enrollments.forEach(enrollment => {
+        const enrollmentItem = document.createElement('tr');
+        enrollmentItem.classList.add('enrollment-item');
+        enrollmentItem.id = enrollment.id;
+        enrollmentItem.innerHTML =
+            `<td">${enrollment.student_name}</td>
+            <td class="student-grade">${enrollment.student_grade}</td>
+            <td class="student-actions">
+                <button class="edit-grade-btn material-icons" type="button">edit</button>
+                <button class="delete-btn material-icons" type="button">delete</button>
+            </td>`;
+
+        const editBtn = enrollmentItem.querySelector('.edit-grade-btn');
+        editBtn.addEventListener('click', () => edit_grade(enrollment.id));
+
+        const deleteBtn = enrollmentItem.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', () => delete_enrollment(enrollment.id));
+
+        enrollmentList.appendChild(enrollmentItem);
+    });
+}
+
+function edit_grade(enrollmentId) {
+    alert(`Edit grade for enrollment ${enrollmentId}`)
+}
+
+
+async function delete_enrollment(enrollmentId) {
+    const inputData = {
+        action: 'delete_enrollment',
+        enrollment_id: enrollmentId,
+        course_id: selectedCourseId
+    };
+
+    const data = await process_data(inputData);
+
+    if (data.status === 'success') {
+        alert(data.message);
+        update_enrollment_list(data.enrollments);
+    }
+    else {
+        alert(`Error: ${data.message}`);
+    }
+}
+
+
+async function get_courses() {
+     const inputData = {
+         action: "get_courses"
+     };
+
+     const data = await process_data(inputData);
+
+     if (data.status === 'success') {
+         update_courses_list(data.courses);
+     }
+     else {
+         alert(`Error: ${data.message}`);
+     }
+}
+
+
+async function select_course(courseId) {
+    const hiddenElements = document.querySelectorAll('.hidden');
+    hiddenElements.forEach(element => element.classList.remove('hidden'));
+
+    const inputData = {
+        action: "get_enrollments",
+        course_id: courseId
+    };
+
+    const data = await process_data(inputData);
+
+    if (data.status === 'success') {
+        selectedCourse.textContent = data.course_name;
+        selectedCourseId = courseId;
+        update_enrollment_list(data.enrollments);
+    }
+    else {
+        alert(`Error: ${data.message}`);
+    }
+}
+
+
+async function delete_course(courseId) {
+    const inputData = {
+        action: 'delete_course',
+        course_id: courseId
+    };
+
+    const data = await process_data(inputData);
+
+    if (data.status === 'success') {
+        alert(data.message);
+        update_courses_list(data.courses);
+    }
+    else {
+        alert(`Error: ${data.message}`);
+    }
 }
 
 
@@ -47,7 +170,28 @@ function add_course() {
     dialogTitle.textContent = "Add Course";
     dialogBody.innerHTML = '<input type="text" id="course-name-input" placeholder="Course Name" autocomplete="off" required>';
     dialog.style.display = "block";
-    action = 'add_course';
+
+    dialogConfirm.onclick = null;
+    dialogConfirm.onclick = async function () {
+        const courseName = document.querySelector('#course-name-input').value.trim();
+
+        const inputData = {
+            action: 'add_course',
+            course: courseName
+        };
+
+        const data = await process_data(inputData);
+
+        if (data.status === 'success') {
+            alert(data.message);
+            update_courses_list(data.courses);
+        }
+        else {
+            alert(`Error: ${data.message}`);
+        }
+
+        dialog.style.display = "none";
+    }
 }
 
 
@@ -55,12 +199,46 @@ function add_student() {
     dialogTitle.textContent = "Add Student";
     dialogBody.innerHTML = '<input type="email" id="student-email-input" placeholder="Student Email" autocomplete="off" required>'
     dialog.style.display = "block";
-    action = 'add_student';
+
+    dialogConfirm.onclick = null;
+    dialogConfirm.onclick = async function () {
+        const email = document.querySelector('#student-email-input').value.trim();
+
+        const inputData = {
+            action: 'add_student',
+            student_email: email,
+            course_id: selectedCourseId
+        };
+
+        const data = await process_data(inputData);
+
+        if (data.status === 'success') {
+            alert(data.message);
+            update_enrollment_list(data.enrollments);
+        }
+        else {
+            alert(`Error: ${data.message}`);
+        }
+
+        dialog.style.display = "none";
+    }
 }
 
 
-addCourseBtn.addEventListener('click', add_course);
-addStudentBtn.addEventListener('click', add_student);
+async function logout() {
+    const inputData = {
+        action: 'logout'
+    };
+
+    const data = await process_data(inputData);
+
+    if (data.status === 'success') {
+        window.location.href = '/';
+    }
+    else {
+        alert(`Error: ${data.message}`);
+    }
+}
 
 
 dialogClose.addEventListener('click', () => {
@@ -68,8 +246,8 @@ dialogClose.addEventListener('click', () => {
 })
 
 
-dialogConfirm.addEventListener('click', () => {
-    send_data(action);
+addCourseBtn.addEventListener('click', add_course);
+addStudentBtn.addEventListener('click', add_student);
+logoutBtn.addEventListener('click', logout);
 
-    dialog.style.display = "none";
-})
+window.onload = get_courses;
