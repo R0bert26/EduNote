@@ -14,3 +14,7 @@ It features a dynamic frontend built with HTML, CSS, and JavaScript, and a robus
 - Install required libraries with vcpkg: './vcpkg install crow soci[postgresql] libsodium'
 - Rename .env.example to .env and fill in database details
 - Build and run tha application. Open browser at http://localhost:18080
+
+## License
+
+This project is licensed under the MIT License 
