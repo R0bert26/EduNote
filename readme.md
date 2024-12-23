@@ -3,7 +3,6 @@
 ## Description
 EduNote is an application for managing student grades and evaluations. 
 It features a dynamic frontend built with HTML, CSS, and JavaScript, and a robust backend in C++ using Crow framework. 
-PostgreSQL is used for data storage, and libsodium ensures data security.
 
 ## Technologies
 - **Frontend**: HTML, CSS, JavaScript
