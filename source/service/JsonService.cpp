@@ -6,7 +6,7 @@ void JsonService::create_error_response(crow::response& res, const std::string& 
 	crow::json::wvalue response;
 	response["status"] = status;
 	response["message"] = message;
-	
+
 	res.set_header("Content-Type", "application/json");
 	res.code = code;
 	res.write(response.dump());

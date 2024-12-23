@@ -9,59 +9,67 @@ Enrollment::Enrollment(const int& id, const int& studentId, const int& courseId,
 	grade(grade) {}
 
 
-bool Enrollment::add_enrollment(const int& studentId, const int& courseId)
+void Enrollment::add_enrollment(const int& studentId, const int& courseId)
 {
-    try
-    {
-        soci::statement st = (Database::session().prepare << "INSERT INTO enrollments (course_id, student_id) VALUES (:courseId, :studentId)",
-            soci::use(courseId), soci::use(studentId));
-
-        st.execute();
-
-		return true;
-    }
-    catch (const soci::soci_error)
+	try
 	{
-		return false;
+		Database::session() << "INSERT INTO enrollments (course_id, student_id) VALUES (:courseId, :studentId)",
+			soci::use(courseId), soci::use(studentId);
+	}
+	catch (const std::exception& err)
+	{
+		throw std::runtime_error(std::string("Error Adding Enrollment: ") + err.what());
 	}
 }
 
 
 std::vector<Enrollment> Enrollment::get_course_enrollments(const int& courseId)
 {
-    soci::rowset<soci::row> rs = (Database::session().prepare << "SELECT * FROM enrollments WHERE course_id = :courseId",
-        soci::use(courseId));
+	try
+	{
+		soci::rowset<soci::row> rs = (Database::session().prepare << "SELECT * FROM enrollments WHERE course_id = :courseId",
+			soci::use(courseId));
 
-    std::vector<Enrollment> enrollments;
-    for (auto& row : rs)
-    {
-        Enrollment enrollment(row.get<int>("enrollment_id"), row.get<int>("student_id"), row.get<int>("course_id"), row.get<int>("grade"));
-        enrollments.emplace_back(enrollment);
-    }
+		std::vector<Enrollment> enrollments;
+		for (auto& row : rs)
+		{
+			Enrollment enrollment(
+				row.get<int>("enrollment_id"),
+				row.get<int>("student_id"),
+				row.get<int>("course_id"),
+				row.get<int>("grade"));
 
-    return enrollments;
+			enrollments.emplace_back(enrollment);
+		}
+
+		return enrollments;
+	}
+	catch (const std::exception& err)
+	{
+		throw std::runtime_error(std::string("Error Getting Enrollments: ") + err.what());
+	}
 }
 
 
 int Enrollment::get_id()
 {
-    return this->id;
+	return this->id;
 }
 
 
 int Enrollment::get_student_id()
 {
-    return this->studentId;
+	return this->studentId;
 }
 
 
 int Enrollment::get_course_id()
 {
-    return this->courseId;
+	return this->courseId;
 }
 
 
 int Enrollment::get_grade()
 {
-    return this->grade;
+	return this->grade;
 }

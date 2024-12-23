@@ -12,10 +12,7 @@
     <!-- Header -->
     <header>
         <div class="logo">EduNote</div>
-        <form method="POST">
-            <input type="hidden" name="action" value="logout">
-            <button class="logout-btn" type="submit">Logout</button>
-        </form>
+        <button class="logout-btn" type="button">Logout</button>
     </header>
 
     <!-- Navigation Menu -->
@@ -33,12 +30,11 @@
         <!-- Add User Section -->
         <section id="add-user" class="section">
             <h2>Add User</h2>
-            <form method="POST" class="user-form" onsubmit="handle_submit(event, 'add-user')">
-                <input class="input-field" type="hidden" name="action" value="add_user" />
-                <input class="input-field" type="text" name="first_name" placeholder="First Name" autocomplete="off" required />
-                <input class="input-field" type="text" name="last_name" placeholder="Last Name" autocomplete="off" required />
-                <input class="input-field" type="email" name="email" placeholder="Email" autocomplete="off" required />
-                <input class="input-field" type="text" name="password" placeholder="Password" autocomplete="off" minlength="8" required />
+            <form id="add-user-form" class="user-form">
+                <input class="input-field" type="text" id="first-name" placeholder="First Name" autocomplete="off" required />
+                <input class="input-field" type="text" id="last-name" placeholder="Last Name" autocomplete="off" required />
+                <input class="input-field" type="email" id="add-email" placeholder="Email" autocomplete="off" required />
+                <input class="input-field" type="text" id="password" placeholder="Password" autocomplete="off" minlength="8" required />
                 <div class="input-radio">
                     <label>
                         <input type="radio" name="role" value="professor" />
@@ -49,17 +45,16 @@
                         Student
                     </label>
                 </div>
-                <button type="submit" class="form-btn">Add</button>
+                <button type="button" id="add-user-btn" class="form-btn">Add</button>
             </form>
         </section>
 
         <!-- Delete User Section -->
         <section id="delete-user" class="section">
             <h2>Delete User</h2>
-            <form method="POST" class="user-form" onsubmit="handle_submit(event, 'delete-user')">
-                <input class="input-field" type="hidden" name="action" value="delete_user" />
-                <input class="input-field" type="email" name="email" placeholder="Email" autocomplete="off" required />
-                <button type="submit" class="form-btn">Delete</button>
+            <form id="delete-user-form" class="user-form">
+                <input class="input-field" type="email" id="delete-email" placeholder="Email" autocomplete="off" required />
+                <button type="button" id="delete-user-btn" class="form-btn">Delete</button>
             </form>
         </section>
     </main>
@@ -71,6 +66,6 @@
 
     <!-- JS Scripts -->
     <script src="/script/admin.js"></script>
-    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

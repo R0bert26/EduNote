@@ -3,6 +3,8 @@
 
 
 #include "user.h"
+#include <vector>
+#include "enrollment.h"
 
 
 class Student : public User
@@ -13,10 +15,10 @@ public:
 		const std::string& firstName,
 		const std::string& lastName,
 		const std::string& email,
-		const std::string& role
-	);
+		const std::string& role);
 
-	static std::string get_full_name(int id);
+	static std::string get_full_name(const int& id);
+	std::vector<Enrollment> get_enrollments();
 };
 
 

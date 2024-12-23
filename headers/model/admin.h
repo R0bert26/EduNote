@@ -16,9 +16,14 @@ public:
 		const std::string& email,
 		const std::string& role);
 
-	static bool add_user(const std::string& firstName, const std::string& lastName, const std::string& email, const std::string& password, const std::string& role);
+	void add_user(
+		const std::string& firstName,
+		const std::string& lastName,
+		const std::string& email,
+		const std::string& password,
+		const std::string& role);
 
-	static bool delete_user(const std::string& email);
+	void delete_user(const std::string& email);
 };
 
 

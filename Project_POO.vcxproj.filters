@@ -93,6 +93,9 @@
     <None Include="resources\script\professor.js">
       <Filter>Resource Files\Script</Filter>
     </None>
+    <None Include="resources\script\student.js">
+      <Filter>Resource Files\Script</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,9 +155,6 @@
     <ClCompile Include="source\model\enrollment.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="source\model\grade.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".env.example" />
@@ -212,9 +212,6 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="headers\model\enrollment.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\model\grade.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
