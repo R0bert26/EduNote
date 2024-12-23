@@ -13,5 +13,5 @@ PostgreSQL is used for data storage, and libsodium ensures data security.
 ## Setup
 
 - Install required libraries with vcpkg: './vcpkg install crow soci[postgresql] libsodium'
-- Rename .env.example to .env and fill in database details.
+- Rename .env.example to .env and fill in database details
 - Build and run tha application. Open browser at http://localhost:18080
