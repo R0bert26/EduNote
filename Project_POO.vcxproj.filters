@@ -96,6 +96,7 @@
     <None Include="resources\script\student.js">
       <Filter>Resource Files\Script</Filter>
     </None>
+    <None Include=".sql" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

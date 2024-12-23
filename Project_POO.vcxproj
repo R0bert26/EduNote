@@ -135,6 +135,7 @@
   <ItemGroup>
     <None Include=".env" />
     <None Include=".gitignore" />
+    <None Include=".sql" />
     <None Include="readme.md" />
     <None Include="resources\script\admin.js" />
     <None Include="resources\script\professor.js" />

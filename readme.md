@@ -12,7 +12,7 @@ It features a dynamic frontend built with HTML, CSS, and JavaScript, and a robus
 ## Setup
 
 - Install required libraries with vcpkg: './vcpkg install crow soci[postgresql] libsodium'
-- Rename .env.example to .env and fill in database details
+- Rename .env.example to .env and fill in database details. Run commands from .sql to create tabels for application
 - Build and run tha application. Open browser at http://localhost:18080
 
 ## License
