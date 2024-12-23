@@ -44,20 +44,28 @@ std::string User::get_last_name()
 
 User User::get_user(const std::string& email)
 {
-	int userID = 0;
-	std::string firstName = "";
-	std::string lastName = "";
-	std::string role = "";
-
-	Database::session() << "SELECT user_id, first_name, last_name, role FROM users WHERE email = :email",
-		soci::into(userID), soci::into(firstName), soci::into(lastName), soci::into(role), soci::use(email);
-
-	if (userID == 0 || firstName == "" || lastName == "" || role == "")
+	try
 	{
-		return User(0, "", "", "", "");
-	}
+		int userID = 0;
+		std::string firstName = "";
+		std::string lastName = "";
+		std::string role = "";
 
-	return User(userID, firstName, lastName, email, role);
+		Database::session() << "SELECT user_id, first_name, last_name, role FROM users WHERE email = :email",
+			soci::into(userID), soci::into(firstName), soci::into(lastName), soci::into(role), soci::use(email);
+
+		if (userID == 0 || firstName == "" || lastName == "" || role == "")
+		{
+			throw std::runtime_error("User Not Found");
+		}
+
+		return User(userID, firstName, lastName, email, role);
+	}
+	catch (const std::exception& err)
+	{
+		throw std::runtime_error(std::string("Error Getting User: ") + err.what());
+	}
 }
+
 
 User::~User() {}

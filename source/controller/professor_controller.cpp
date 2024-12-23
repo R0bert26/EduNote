@@ -1,3 +1,4 @@
+#include <vector>
 #include "../../headers/controller/professor_controller.h"
 #include "../../headers/model/session.h"
 #include "../../headers/service//JsonService.h"
@@ -5,7 +6,6 @@
 #include "../../headers/model/course.h"
 #include "../../headers/model/enrollment.h"
 #include "../../headers/model/student.h"
-#include <vector>
 
 
 void ProfessorController::run(crow::response& res, const crow::request& req)
@@ -20,14 +20,14 @@ void ProfessorController::run(crow::response& res, const crow::request& req)
 	crow::json::rvalue data = crow::json::load(req.body);
 	if (!data)
 	{
-		JsonService::create_error_response(res, "failed", "Invalid JSON", 400);
+		JsonService::create_error_response(res, "failed", "Invalid JSON", 500);
 		return;
 	}
 
 	std::string action = data.has("action") ? data["action"].s() : std::string("");
 	if (action == "")
 	{
-		JsonService::create_error_response(res, "failed", "Invalid Action", 400);
+		JsonService::create_error_response(res, "failed", "Invalid Action", 500);
 		return;
 	}
 
@@ -43,9 +43,9 @@ void ProfessorController::run(crow::response& res, const crow::request& req)
 	{
 		delete_course(res, data, professor);
 	}
-	else if (action == "add_student")
+	else if (action == "add_enrollment")
 	{
-		add_student(res, data, professor);
+		add_enrollment(res, data, professor);
 	}
 	else if (action == "get_enrollments")
 	{
@@ -55,244 +55,333 @@ void ProfessorController::run(crow::response& res, const crow::request& req)
 	{
 		delete_enrollment(res, data, professor);
 	}
+	else if (action == "edit_grade")
+	{
+		edit_grade(res, data, professor);
+	}
 	else if (action == "logout")
 	{
 		logout(res);
+	}
+	else
+	{
+		JsonService::create_error_response(res, "failed", "Invalid Action", 500);
 	}
 }
 
 
 void ProfessorController::add_course(crow::response& res, crow::json::rvalue& data, Professor& professor)
 {
-	std::string courseName = data.has("course") ? data["course"].s() : std::string("");
-	if (courseName == "")
+	try
 	{
-		JsonService::create_error_response(res, "failed", "Invalid Course Name", 400);
-		return;
-	}
+		std::string courseName = data.has("course") ? data["course"].s() : std::string("");
+		if (courseName == "")
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Course Name", 500);
+			return;
+		}
 
-	bool status = professor.add_course(courseName);
-	if (!status)
+		professor.add_course(courseName);
+
+		std::vector<Course> courses = Course::get_courses(professor.get_id());
+		std::vector<crow::json::wvalue> coursesJson;
+
+		for (int i = 0; i < courses.size(); i++)
+		{
+			crow::json::wvalue courseJson;
+			courseJson["id"] = courses[i].get_id();
+			courseJson["name"] = courses[i].get_name();
+
+			coursesJson.emplace_back(courseJson);
+		}
+
+		crow::json::wvalue response;
+		response["status"] = "success";
+		response["message"] = "Course added successfully";
+		response["courses"] = std::move(coursesJson);
+
+		res.code = 200;
+		res.set_header("Content-Type", "application/json");
+		res.write(response.dump());
+		res.end();
+	}
+	catch (const std::exception& err)
 	{
-		JsonService::create_error_response(res, "failed", "Error Adding Course", 400);
-		return;
+		JsonService::create_error_response(res, "failed", err.what(), 500);
 	}
-
-	std::vector<Course> courses = Course::get_courses(professor.get_id());
-
-	std::vector<crow::json::wvalue> coursesJson;
-	for (int i = 0; i < courses.size(); i++)
-	{
-		crow::json::wvalue courseJson;
-		courseJson["id"] = courses[i].get_id();
-		courseJson["name"] = courses[i].get_name();
-
-		coursesJson.emplace_back(courseJson);
-	}
-
-	crow::json::wvalue response;
-	response["status"] = "success";
-	response["message"] = "Course added successfully";
-	response["courses"] = std::move(coursesJson);
-
-	res.code = 200;
-	res.set_header("Content-Type", "application/json");
-	res.write(response.dump());
-	res.end();
 }
 
 
 void ProfessorController::get_courses(crow::response& res, crow::json::rvalue& data, Professor& professor)
 {
-	std::vector<Course> courses = Course::get_courses(professor.get_id());
-
-	std::vector<crow::json::wvalue> coursesJson;
-	for (int i = 0; i < courses.size(); i++)
+	try
 	{
-		crow::json::wvalue courseJson;
-		courseJson["id"] = courses[i].get_id();
-		courseJson["name"] = courses[i].get_name();
+		std::vector<Course> courses = Course::get_courses(professor.get_id());
+		std::vector<crow::json::wvalue> coursesJson;
 
-		coursesJson.emplace_back(courseJson);
+		for (int i = 0; i < courses.size(); i++)
+		{
+			crow::json::wvalue courseJson;
+			courseJson["id"] = courses[i].get_id();
+			courseJson["name"] = courses[i].get_name();
+
+			coursesJson.emplace_back(courseJson);
+		}
+
+		crow::json::wvalue response;
+		response["courses"] = std::move(coursesJson);
+		response["status"] = "success";
+
+		res.code = 200;
+		res.set_header("Content-Type", "application/json");
+		res.write(response.dump());
+		res.end();
 	}
-	
-	crow::json::wvalue response;
-	response["courses"] = std::move(coursesJson);
-	response["status"] = "success";
-
-	res.code = 200;
-	res.set_header("Content-Type", "application/json");
-	res.write(response.dump());
-	res.end();
+	catch (const std::exception& err)
+	{
+		throw std::runtime_error(std::string("Error: ") + err.what());
+	}
 }
 
 
 void ProfessorController::delete_course(crow::response& res, crow::json::rvalue& data, Professor& professor)
 {
-	int courseId = data.has("course_id") ? data["course_id"].i() : 0;
-	if (courseId == 0)
+	try
 	{
-		JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
-		return;
-	}
+		int courseId = data.has("course_id") ? data["course_id"].i() : -1;
+		if (courseId == -1)
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
+			return;
+		}
 
-	bool status = professor.delete_course(courseId);
-	if (!status)
+		professor.delete_course(courseId);
+
+		std::vector<Course> courses = Course::get_courses(professor.get_id());
+		std::vector<crow::json::wvalue> coursesJson;
+
+		for (int i = 0; i < courses.size(); i++)
+		{
+			crow::json::wvalue courseJson;
+			courseJson["id"] = courses[i].get_id();
+			courseJson["name"] = courses[i].get_name();
+
+			coursesJson.emplace_back(courseJson);
+		}
+
+		crow::json::wvalue response;
+		response["status"] = "success";
+		response["message"] = "Course deleted successfully";
+		response["courses"] = std::move(coursesJson);
+
+		res.code = 200;
+		res.set_header("Content-Type", "application/json");
+		res.write(response.dump());
+		res.end();
+	}
+	catch (const std::exception& err)
 	{
-		JsonService::create_error_response(res, "failed", "Error Deleting Course", 400);
-		return;
+		JsonService::create_error_response(res, "failed", err.what(), 500);
 	}
-
-	std::vector<Course> courses = Course::get_courses(professor.get_id());
-
-	std::vector<crow::json::wvalue> coursesJson;
-	for (int i = 0; i < courses.size(); i++)
-	{
-		crow::json::wvalue courseJson;
-		courseJson["id"] = courses[i].get_id();
-		courseJson["name"] = courses[i].get_name();
-
-		coursesJson.emplace_back(courseJson);
-	}
-
-	crow::json::wvalue response;
-	response["status"] = "success";
-	response["message"] = "Course deleted successfully";
-	response["courses"] = std::move(coursesJson);
-
-	res.code = 200;
-	res.set_header("Content-Type", "application/json");
-	res.write(response.dump());
-	res.end();
 }
 
 
-void ProfessorController::add_student(crow::response& res, crow::json::rvalue& data, Professor& professor)
+void ProfessorController::add_enrollment(crow::response& res, crow::json::rvalue& data, Professor& professor)
 {
-	std::string studentEmail = data.has("student_email") ? data["student_email"].s() : std::string("");
-	if (studentEmail == "")
+	try
 	{
-		JsonService::create_error_response(res, "failed", "Invalid Student Email", 400);
-		return;
-	}
+		std::string studentEmail = data.has("student_email") ? data["student_email"].s() : std::string("");
+		if (studentEmail == "")
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Student Email", 400);
+			return;
+		}
 
-	int courseId = data.has("course_id") ? data["course_id"].i() : -1;
-	if (courseId == -1)
+		int courseId = data.has("course_id") ? data["course_id"].i() : -1;
+		if (courseId == -1)
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
+			return;
+		}
+
+		professor.add_enrollment(studentEmail, courseId);
+
+		std::vector<Enrollment> enrollments = Enrollment::get_course_enrollments(courseId);
+		std::vector<crow::json::wvalue> enrollmentsJson;
+
+		for (auto& enrollment : enrollments)
+		{
+			crow::json::wvalue enrollmentJson;
+			enrollmentJson["id"] = enrollment.get_id();
+			enrollmentJson["student_name"] = Student::get_full_name(enrollment.get_student_id());
+			enrollmentJson["student_grade"] = enrollment.get_grade();
+
+			enrollmentsJson.emplace_back(enrollmentJson);
+		}
+
+		crow::json::wvalue response;
+		response["status"] = "success";
+		response["message"] = "Student added successfully";
+		response["enrollments"] = std::move(enrollmentsJson);
+
+		res.code = 200;
+		res.set_header("Content-Type", "application/json");
+		res.write(response.dump());
+		res.end();
+	}
+	catch (const std::exception& err)
 	{
-		JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
-		return;
+		JsonService::create_error_response(res, "failed", err.what(), 500);
 	}
-
-	auto status = professor.add_enrollments(studentEmail, courseId);
-	if (!status)
-	{
-		JsonService::create_error_response(res, "failed", "Error Adding Student", 400);
-		return;
-	}
-
-	std::vector<Enrollment> enrollments = Enrollment::get_course_enrollments(courseId);
-
-	std::vector<crow::json::wvalue> enrollmentsJson;
-	for (auto& enrollment : enrollments)
-	{
-		crow::json::wvalue enrollmentJson;
-		enrollmentJson["id"] = enrollment.get_id();
-		enrollmentJson["student_name"] = Student::get_full_name(enrollment.get_student_id());
-		enrollmentJson["student_grade"] = enrollment.get_grade();
-
-		enrollmentsJson.emplace_back(enrollmentJson);
-	}
-
-	crow::json::wvalue response;
-	response["status"] = "success";
-	response["message"] = "Student added successfully";
-	response["enrollments"] = std::move(enrollmentsJson);
-
-	res.code = 200;
-	res.set_header("Content-Type", "application/json");
-	res.write(response.dump());
-	res.end();
 }
+
 
 void ProfessorController::get_enrollments(crow::response& res, crow::json::rvalue& data, Professor& professor)
 {
-	int courseId = data.has("course_id") ? data["course_id"].i() : -1;
-	if (courseId == -1)
+	try
 	{
-		JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
-		return;
+		int courseId = data.has("course_id") ? data["course_id"].i() : -1;
+		if (courseId == -1)
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
+			return;
+		}
+
+		std::vector<Enrollment> enrollments = Enrollment::get_course_enrollments(courseId);
+		std::vector<crow::json::wvalue> enrollmentsJson;
+
+		for (auto& enrollment : enrollments)
+		{
+			crow::json::wvalue enrollmentJson;
+			enrollmentJson["id"] = enrollment.get_id();
+			enrollmentJson["student_name"] = Student::get_full_name(enrollment.get_student_id());
+			enrollmentJson["student_grade"] = enrollment.get_grade();
+
+			enrollmentsJson.emplace_back(enrollmentJson);
+		}
+
+		crow::json::wvalue response;
+		response["status"] = "success";
+		response["course_name"] = Course::get_course_name(courseId);
+		response["enrollments"] = std::move(enrollmentsJson);
+
+		res.code = 200;
+		res.set_header("Content-Type", "application/json");
+		res.write(response.dump());
+		res.end();
 	}
-
-	std::vector<Enrollment> enrollments = Enrollment::get_course_enrollments(courseId);
-
-	std::vector<crow::json::wvalue> enrollmentsJson;
-	for (auto& enrollment : enrollments)
+	catch (const std::exception& err)
 	{
-		crow::json::wvalue enrollmentJson;
-		enrollmentJson["id"] = enrollment.get_id();
-		enrollmentJson["student_name"] = Student::get_full_name(enrollment.get_student_id());
-		enrollmentJson["student_grade"] = enrollment.get_grade();
-
-		enrollmentsJson.emplace_back(enrollmentJson);
+		JsonService::create_error_response(res, "failed", err.what(), 500);
 	}
-
-	crow::json::wvalue response;
-	response["status"] = "success";
-	response["course_name"] = Course::get_course_name(courseId);
-	response["enrollments"] = std::move(enrollmentsJson);
-
-	res.code = 200;
-	res.set_header("Content-Type", "application/json");
-	res.write(response.dump());
-	res.end();
 }
+
 
 void ProfessorController::delete_enrollment(crow::response& res, crow::json::rvalue& data, Professor& professor)
 {
-	int enrollmentId = data.has("enrollment_id") ? data["enrollment_id"].i() : -1;
-	if (enrollmentId == -1)
+	try
 	{
-		JsonService::create_error_response(res, "failed", "Invalid Enrollment ID", 400);
-		return;
-	}
+		int enrollmentId = data.has("enrollment_id") ? data["enrollment_id"].i() : -1;
+		if (enrollmentId == -1)
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Enrollment ID", 400);
+			return;
+		}
 
-	int courseId = data.has("course_id") ? data["course_id"].i() : -1;
-	if (courseId == -1)
+		int courseId = data.has("course_id") ? data["course_id"].i() : -1;
+		if (courseId == -1)
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
+			return;
+		}
+
+		professor.delete_enrollment(enrollmentId);
+
+		std::vector<Enrollment> enrollments = Enrollment::get_course_enrollments(courseId);
+		std::vector<crow::json::wvalue> enrollmentsJson;
+
+		for (auto& enrollment : enrollments)
+		{
+			crow::json::wvalue enrollmentJson;
+			enrollmentJson["id"] = enrollment.get_id();
+			enrollmentJson["student_name"] = Student::get_full_name(enrollment.get_student_id());
+			enrollmentJson["student_grade"] = enrollment.get_grade();
+
+			enrollmentsJson.emplace_back(enrollmentJson);
+		}
+
+		crow::json::wvalue response;
+		response["status"] = "success";
+		response["message"] = "Enrollment deleted successfully";
+		response["course_name"] = Course::get_course_name(courseId);
+		response["enrollments"] = std::move(enrollmentsJson);
+
+		res.code = 200;
+		res.set_header("Content-Type", "application/json");
+		res.write(response.dump());
+		res.end();
+	}
+	catch (const std::exception& err)
 	{
-		JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
-		return;
+		JsonService::create_error_response(res, "failed", err.what(), 500);
 	}
+}
 
-	auto status = professor.delete_enrollment(enrollmentId);
-	if (!status)
+
+void ProfessorController::edit_grade(crow::response& res, crow::json::rvalue& data, Professor& professor)
+{
+	try
 	{
-		JsonService::create_error_response(res, "failed", "Error Deleting Enrollment", 400);
-		return;
+		int enrollmentId = data.has("enrollment_id") ? data["enrollment_id"].i() : -1;
+		if (enrollmentId == -1)
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Enrollment ID", 400);
+			return;
+		}
+
+		int grade = data.has("grade") ? data["grade"].i() : -1;
+		if (grade == -1)
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Grade", 400);
+			return;
+		}
+
+		int courseId = data.has("course_id") ? data["course_id"].i() : -1;
+		if (courseId == -1)
+		{
+			JsonService::create_error_response(res, "failed", "Invalid Course ID", 400);
+			return;
+		}
+
+		professor.edit_grade(enrollmentId, grade);
+
+		std::vector<Enrollment> enrollments = Enrollment::get_course_enrollments(courseId);
+		std::vector<crow::json::wvalue> enrollmentsJson;
+
+		for (auto& enrollment : enrollments)
+		{
+			crow::json::wvalue enrollmentJson;
+			enrollmentJson["id"] = enrollment.get_id();
+			enrollmentJson["student_name"] = Student::get_full_name(enrollment.get_student_id());
+			enrollmentJson["student_grade"] = enrollment.get_grade();
+
+			enrollmentsJson.emplace_back(enrollmentJson);
+		}
+
+		crow::json::wvalue response;
+		response["status"] = "success";
+		response["course_name"] = Course::get_course_name(courseId);
+		response["enrollments"] = std::move(enrollmentsJson);
+
+		res.code = 200;
+		res.set_header("Content-Type", "application/json");
+		res.write(response.dump());
+		res.end();
 	}
-
-	std::vector<Enrollment> enrollments = Enrollment::get_course_enrollments(courseId);
-
-	std::vector<crow::json::wvalue> enrollmentsJson;
-	for (auto& enrollment : enrollments)
+	catch (const std::exception& err)
 	{
-		crow::json::wvalue enrollmentJson;
-		enrollmentJson["id"] = enrollment.get_id();
-		enrollmentJson["student_name"] = Student::get_full_name(enrollment.get_student_id());
-		enrollmentJson["student_grade"] = enrollment.get_grade();
-
-		enrollmentsJson.emplace_back(enrollmentJson);
+		JsonService::create_error_response(res, "failed", err.what(), 500);
 	}
-
-	crow::json::wvalue response;
-	response["status"] = "success";
-	response["message"] = "Enrollment deleted successfully";
-	response["course_name"] = Course::get_course_name(courseId);
-	response["enrollments"] = std::move(enrollmentsJson);
-
-	res.code = 200;
-	res.set_header("Content-Type", "application/json");
-	res.write(response.dump());
-	res.end();
 }
 
 
@@ -302,7 +391,7 @@ void ProfessorController::logout(crow::response& res)
 
 	crow::json::wvalue response;
 	response["status"] = "success";
-	
+
 	res.code = 200;
 	res.set_header("Content-Type", "application/json");
 	res.write(response.dump());

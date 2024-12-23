@@ -12,30 +12,46 @@ Admin::Admin(
 	User(id, firstName, lastName, email, role) {}
 
 
-bool Admin::add_user(const std::string& firstName, const std::string& lastName, const std::string& email, const std::string& password, const std::string& role)
+void Admin::add_user(
+	const std::string& firstName,
+	const std::string& lastName,
+	const std::string& email,
+	const std::string& password,
+	const std::string& role)
 {
-	int status = 0;
-	std::string hashedPassword = HashingService::hash_password(password);
+	try
+	{
+		std::string hashedPassword = HashingService::hash_password(password);
 
-	Database::session() << "INSERT INTO users (email, password, role, first_name, last_name) VALUES (:email, :hashedPassword, :role, :firstName, :lastName)",
-		soci::use(email), soci::use(hashedPassword), soci::use(role), soci::use(firstName), soci::use(lastName);
-
-	Database::session() << "SELECT COUNT(*) FROM users WHERE email = :email",
-		soci::into(status), soci::use(email);
-
-	return status != 0;
+		Database::session() << "INSERT INTO users (email, password, role, first_name, last_name) VALUES (:email, :hashedPassword, :role, :firstName, :lastName)",
+			soci::use(email), soci::use(hashedPassword), soci::use(role), soci::use(firstName), soci::use(lastName);
+	}
+	catch (const std::exception& err)
+	{
+		throw std::runtime_error(std::string("Error Adding User: ") + err.what());
+	}
 }
 
 
-bool Admin::delete_user(const std::string& email)
+void Admin::delete_user(const std::string& email)
 {
-	int status = 1;
+	try
+	{
+		int userCount = 0;
 
-	Database::session() << "DELETE FROM users WHERE email = :email",
-		soci::use(email);
+		Database::session() << "SELECT COUNT(*) FROM users WHERE email = :email",
+			soci::use(email), soci::into(userCount);
 
-	Database::session() << "SELECT COUNT(*) FROM users WHERE email = :email",
-		soci::into(status), soci::use(email);
+		if (userCount == 0)
+		{
+			throw std::runtime_error("User Does Not Exist.");
+		}
 
-	return status == 0;
+		Database::session() << "DELETE FROM users WHERE email = :email",
+			soci::use(email);
+	}
+	catch (const std::exception& err)
+	{
+		throw std::runtime_error(std::string("Error Deleting User: ") + err.what());
+	}
 }

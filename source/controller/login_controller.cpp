@@ -7,21 +7,17 @@
 
 void LoginController::login(const crow::request& req, crow::response& res)
 {
-	auto params = req.get_body_params();
-
-	std::string email = params.get("email");
-	std::string password = params.get("password");
-
-	if (AuthService::check_auth(email, password))
+	try
 	{
-		User user = User::get_user(email);
+		auto params = req.get_body_params();
 
-		if (user.get_id() == 0)
+		std::string email = params.get("email");
+		std::string password = params.get("password");
+
+		if (AuthService::check_auth(email, password))
 		{
-			Error::generate_error_page(res, 500, "Invalid User");
-		}
-		else
-		{
+			User user = User::get_user(email);
+
 			Session::create_session(user);
 
 			if (user.get_role() == "admin")
@@ -40,9 +36,13 @@ void LoginController::login(const crow::request& req, crow::response& res)
 			res.code = 302;
 			res.end();
 		}
+		else
+		{
+			Error::generate_error_page(res, 401, "Invalid Email or Password");
+		}
 	}
-	else
+	catch (const std::exception& err)
 	{
-		Error::generate_error_page(res, 401, "Invalid Email or Password");
+		Error::generate_error_page(res, 500, err.what());
 	}
 }

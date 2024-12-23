@@ -4,6 +4,7 @@
 #include "headers/app/database.h"
 #include "headers/app/router.h"
 
+
 int main()
 {
 	try
@@ -11,9 +12,9 @@ int main()
 		Database::connect();
 		std::cout << "Database connected" << std::endl;
 	}
-	catch (const std::exception& e)
+	catch (const std::exception& err)
 	{
-		std::cerr << "Database connection error: " << e.what() << std::endl;
+		std::cerr << "Database connection error: " << err.what() << std::endl;
 		return 1;
 	}
 

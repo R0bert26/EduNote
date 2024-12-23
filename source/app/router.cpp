@@ -15,7 +15,7 @@ void Router::init_routes(crow::SimpleApp& app)
 			if (req.method == crow::HTTPMethod::GET)
 			{
 				View::render(res, req, "login.html");
-			}			
+			}
 			else if (req.method == crow::HTTPMethod::POST)
 			{
 				LoginController::login(req, res);
@@ -81,7 +81,7 @@ void Router::init_routes(crow::SimpleApp& app)
 
 	CROW_ROUTE(app, "/static/<string>").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res, const std::string& cssFile)
 		{
-			View::load_static_file(res, "resources/static/" + cssFile);		
+			View::load_static_file(res, "resources/static/" + cssFile);
 		});
 
 	CROW_ROUTE(app, "/script/<string>").methods(crow::HTTPMethod::GET)([](const crow::request& req, crow::response& res, const std::string& jsFile)

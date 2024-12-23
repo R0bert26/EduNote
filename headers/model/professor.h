@@ -9,20 +9,17 @@ class Professor : public User
 {
 public:
 	Professor(
-		const int id,
+		const int& id,
 		const std::string& firstName,
 		const std::string& lastName,
 		const std::string& email,
-		const std::string& role
-	);
+		const std::string& role);
 
-	bool add_course(const std::string& courseName);
-
-	bool delete_course(const int& courseId);
-
-	bool add_enrollments(const std::string& studentEmail, const int& courseId);
-
-	bool delete_enrollment(int enrollmentId);
+	void add_course(const std::string& courseName);
+	void delete_course(const int& courseId);
+	void add_enrollment(const std::string& studentEmail, const int& courseId);
+	void delete_enrollment(const int& enrollmentId);
+	void edit_grade(const int& enrollmentId, const int& grade);
 };
 
 

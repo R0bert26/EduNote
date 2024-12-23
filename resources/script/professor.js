@@ -23,16 +23,12 @@ async function process_data(inputData) {
             body: params
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP Error! Status: ${response.status}`);
-        }
-
         const data = await response.json();
+        console.log(data);
         return data
-
     } catch (error) {
-        alert(`Error: ${error.message}`);
-        throw new Error(`Error: ${error.message}`);
+        alert(`${error.message}`);
+        throw new Error(`${error.message}`);
     }
 }
 
@@ -87,7 +83,32 @@ function update_enrollment_list(enrollments) {
 }
 
 function edit_grade(enrollmentId) {
-    alert(`Edit grade for enrollment ${enrollmentId}`)
+    dialogTitle.textContent = "Edit Grade";
+    dialogBody.innerHTML = '<input type="number" id="grade-input" min="1" max="10" required autocomplete="off">';
+    dialog.style.display = "block";
+
+    dialogConfirm.onclick = null;
+    dialogConfirm.onclick = async function () {
+        const grade = document.querySelector('#grade-input').value.trim();
+
+        const inputData = {
+            action: 'edit_grade',
+            enrollment_id: enrollmentId,
+            course_id: selectedCourseId,
+            grade: grade
+        };
+
+        const data = await process_data(inputData);
+
+        if (data.status === 'success') {
+            update_enrollment_list(data.enrollments);
+        }
+        else {
+            alert(`${data.message}`);
+        }
+
+        dialog.style.display = "none";
+    }
 }
 
 
@@ -105,24 +126,24 @@ async function delete_enrollment(enrollmentId) {
         update_enrollment_list(data.enrollments);
     }
     else {
-        alert(`Error: ${data.message}`);
+        alert(`${data.message}`);
     }
 }
 
 
 async function get_courses() {
-     const inputData = {
-         action: "get_courses"
-     };
+    const inputData = {
+        action: "get_courses"
+    };
 
-     const data = await process_data(inputData);
+    const data = await process_data(inputData);
 
-     if (data.status === 'success') {
-         update_courses_list(data.courses);
-     }
-     else {
-         alert(`Error: ${data.message}`);
-     }
+    if (data.status === 'success') {
+        update_courses_list(data.courses);
+    }
+    else {
+        alert(`${data.message}`);
+    }
 }
 
 
@@ -143,7 +164,7 @@ async function select_course(courseId) {
         update_enrollment_list(data.enrollments);
     }
     else {
-        alert(`Error: ${data.message}`);
+        alert(`${data.message}`);
     }
 }
 
@@ -161,7 +182,7 @@ async function delete_course(courseId) {
         update_courses_list(data.courses);
     }
     else {
-        alert(`Error: ${data.message}`);
+        alert(`${data.message}`);
     }
 }
 
@@ -187,7 +208,7 @@ function add_course() {
             update_courses_list(data.courses);
         }
         else {
-            alert(`Error: ${data.message}`);
+            alert(`${data.message}`);
         }
 
         dialog.style.display = "none";
@@ -195,7 +216,7 @@ function add_course() {
 }
 
 
-function add_student() {
+function add_enrollment() {
     dialogTitle.textContent = "Add Student";
     dialogBody.innerHTML = '<input type="email" id="student-email-input" placeholder="Student Email" autocomplete="off" required>'
     dialog.style.display = "block";
@@ -205,7 +226,7 @@ function add_student() {
         const email = document.querySelector('#student-email-input').value.trim();
 
         const inputData = {
-            action: 'add_student',
+            action: 'add_enrollment',
             student_email: email,
             course_id: selectedCourseId
         };
@@ -217,7 +238,7 @@ function add_student() {
             update_enrollment_list(data.enrollments);
         }
         else {
-            alert(`Error: ${data.message}`);
+            alert(`${data.message}`);
         }
 
         dialog.style.display = "none";
@@ -236,7 +257,7 @@ async function logout() {
         window.location.href = '/';
     }
     else {
-        alert(`Error: ${data.message}`);
+        alert(`${data.message}`);
     }
 }
 
@@ -247,7 +268,7 @@ dialogClose.addEventListener('click', () => {
 
 
 addCourseBtn.addEventListener('click', add_course);
-addStudentBtn.addEventListener('click', add_student);
+addStudentBtn.addEventListener('click', add_enrollment);
 logoutBtn.addEventListener('click', logout);
 
 window.onload = get_courses;

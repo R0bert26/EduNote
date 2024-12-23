@@ -40,8 +40,41 @@ header {
     transition: background-color 0.3s ease;
 }
 
-.logout-btn:hover {
-    color: #fff;
+    .logout-btn:hover {
+        color: #fff;
+    }
+
+/* Main */
+.student-name {
+    margin-top: 100px;
+    text-align: center;
+    font-size: 30px;
+}
+
+table {
+    width: 35%;
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 60px;
+}
+
+th, td {
+    text-align: left;
+}
+
+th {
+    font-size: 23px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 8px;
+}
+
+td {
+    font-size: 18px;
+    padding: 5px 0;
+}
+
+.student-grade {
+    text-align: right;
 }
 
 /* Footer */

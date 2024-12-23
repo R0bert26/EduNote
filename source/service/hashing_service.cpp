@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "../../headers/service/hashing_service.h"
 
 
@@ -13,7 +14,7 @@ std::string HashingService::hash_password(const std::string& password)
 
 	if (ok != 0)
 	{
-		return "";
+		throw std::runtime_error("Failed to hash password");
 	}
 
 	return std::string(hashedPassword);
